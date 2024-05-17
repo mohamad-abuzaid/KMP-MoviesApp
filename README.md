@@ -7,7 +7,7 @@
 KMP-Movies is a Kotlin Multi-platform application designed to bridge the gap between movie enthusiasts and the vast world of cinema across platforms. Leveraging the power of Kotlin Multiplatform Mobile (KMM), this app offers a seamless user experience on Android, iOS and Web, bringing movie descriptions, ratings, and much more.
 
 
-**Supports:** Android 📱, iOS 📱, Web 🌐
+**Supports:** Android 📱, iOS 📱, Web 🌐, Desktop 🖥️
 
 ## Features ✨
 
