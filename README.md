@@ -1,4 +1,4 @@
-![KMP-Movies](https://github.com/mohamad-abuzaid/KMP-Movies/assets/935514/c05ebaa2-f658-4d8d-a95f-0e6bd8c69e3a)
+![KMP-Movies](https://github.com/mohamad-abuzaid/mohamad-abuzaid/assets/935514/5cf70249-eecf-42bb-b483-af7a53ceee9d)
 
 # KMP-Movies
 
