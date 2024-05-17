@@ -12,12 +12,14 @@ KMP-Movies is a Kotlin Multi-platform application designed to bridge the gap bet
 ## Features ✨
 
 - **Clean Architecture**
+- **Multi-Module (app - domain - data)**
 - **MVI**
-- **Compose Multiplatform**
+- **Compose Multiplatform (CMP)**
 - **Kotlin Multiplatform (KMP)**
 - **Coroutines & Flow**
-- **SQLDelight (Database)**
+- **Room (Database)**
 - **Ktor (Networking)**
+- **Moshi (JSON parser)**
 - **Koin (DI)**
 - **Image Loader**
 
