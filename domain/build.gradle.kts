@@ -1,18 +1,26 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.ksp)
 }
 
 android {
     namespace = "me.abuzaid.kmpmovies.domain"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
+
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
@@ -20,7 +28,7 @@ kotlin {
     androidTarget {
         compilations.all {
             kotlinOptions {
-                jvmTarget = "11"
+                jvmTarget = "17"
             }
         }
     }
@@ -42,12 +50,17 @@ kotlin {
             dependencies {
                 api(libs.coroutines.core)
                 api(libs.koin.core)
+                api(libs.ktor.client.serialization)
+
+
+                api(libs.timber)
             }
         }
 
         val androidMain by getting {
             dependencies {
                 api(libs.coroutines.android)
+                api(libs.paging.common)
 
                 api(libs.koin.android)
                 api(libs.koin.compose)
@@ -56,16 +69,20 @@ kotlin {
 
         val commonTest by getting {
             dependencies {
-                api(libs.kotlin.test)
+                api(kotlin("test-common"))
+                api(kotlin("test-annotations-common"))
                 api(libs.coroutines.test)
+            }
+        }
+
+        val androidUnitTest by getting {
+            dependencies {
+                implementation(kotlin("test-junit"))
+                implementation(libs.junit.test)
             }
         }
     }
 }
 
 dependencies {
-    api(libs.moshi.core)
-    api(libs.moshi.kotlin)
-    api(libs.moshi.adapters)
-    ksp(libs.moshi.codegen)
 }

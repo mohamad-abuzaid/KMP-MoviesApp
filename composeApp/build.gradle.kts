@@ -1,3 +1,4 @@
+import com.android.build.gradle.internal.ide.kmp.KotlinAndroidSourceSetMarker.Companion.android
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
@@ -6,7 +7,53 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.ksp)
+    id("kotlin-parcelize")
+}
+
+android {
+    namespace = "me.abuzaid.kmpmovies"
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
+
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    sourceSets["main"].res.srcDirs("src/androidMain/res")
+    sourceSets["main"].resources.srcDirs("src/commonMain/resources")
+
+    defaultConfig {
+        applicationId = "me.abuzaid.kmpmovies"
+        minSdk = libs.versions.android.minSdk.get().toInt()
+        targetSdk = libs.versions.android.targetSdk.get().toInt()
+        versionCode = 1
+        versionName = "1.0"
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    packaging {
+        resources.excludes += listOf(
+            "META-INF/*.kotlin_module",
+            "META-INF/DEPENDENCIES",
+            "META-INF/LICENSE",
+            "META-INF/LICENSE.txt",
+            "META-INF/license.txt",
+            "META-INF/NOTICE",
+            "META-INF/NOTICE.txt",
+            "META-INF/notice.txt",
+            "META-INF/ASL2.0"
+        )
+    }
+
+    buildFeatures {
+        buildConfig = true
+        compose = true
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
 }
 
 kotlin {
@@ -30,7 +77,7 @@ kotlin {
     androidTarget {
         compilations.all {
             kotlinOptions {
-                jvmTarget = "11"
+                jvmTarget = "17"
             }
         }
     }
@@ -50,10 +97,11 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(compose.ui)
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.material)
-                implementation(compose.ui)
+                implementation(compose.material3)
                 implementation(compose.components.resources)
                 implementation(compose.components.uiToolingPreview)
             }
@@ -61,8 +109,16 @@ kotlin {
 
         val androidMain by getting {
             dependencies {
-                implementation(libs.compose.ui.tooling.preview)
-                implementation(libs.androidx.activity.compose)
+                implementation(libs.androidx.activity)
+                implementation(libs.androidx.appcompat)
+                implementation(libs.material)
+
+                implementation(project.dependencies.platform(libs.compose.bom))
+                implementation(libs.compose.coil)
+                implementation(libs.compose.icons)
+                implementation(libs.compose.icons.extended)
+
+                implementation(libs.paging.compose.android)
             }
         }
 
@@ -76,40 +132,13 @@ kotlin {
             dependencies {
             }
         }
-    }
-}
 
-android {
-    namespace = "me.abuzaid.kmpmovies"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
-
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    sourceSets["main"].res.srcDirs("src/androidMain/res")
-    sourceSets["main"].resources.srcDirs("src/commonMain/resources")
-
-    defaultConfig {
-        applicationId = "me.abuzaid.kmpmovies"
-        minSdk = libs.versions.android.minSdk.get().toInt()
-        targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "1.0"
-    }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        val androidUnitTest by getting {
+            dependencies {
+                implementation(kotlin("test-junit"))
+                implementation(libs.junit.test)
+            }
         }
-    }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    dependencies {
-        debugImplementation(libs.compose.ui.tooling)
     }
 }
 
@@ -125,10 +154,10 @@ compose.desktop {
     }
 }
 
-compose.experimental {
-    web.application {}
-}
-
 dependencies {
     implementation(project(":domain"))
+    implementation(project(":di"))
+
+    debugImplementation(libs.compose.ui.tooling)
+    debugImplementation(libs.compose.ui.test.manifest)
 }

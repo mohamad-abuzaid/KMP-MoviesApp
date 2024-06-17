@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
@@ -5,15 +8,47 @@ plugins {
     alias(libs.plugins.room)
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Config                                                                                         //
+////////////////////////////////////////////////////////////////////////////////////////////////////
+class BConfig {
+    var commonProperties: Properties = Properties()
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Pull in config properties                                                                      //
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+val config = BConfig()
+val basePath = "${rootDir.absolutePath}/config/"
+
+config.commonProperties.load(FileInputStream(rootProject.file("${basePath}common.properties")))
+
 android {
     namespace = "me.abuzaid.kmpmovies.data"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
+
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    buildTypes {
+        all {
+            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            buildConfigField("String", "BASE_URL", "\"${config.commonProperties["base_url"]}\"")
+            buildConfigField("String", "API_KEY", "\"${config.commonProperties["api"]}\"")
+            buildConfigField("String", "TOKEN", "\"${config.commonProperties["token"]}\"")
+        }
+    }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
@@ -21,7 +56,7 @@ kotlin {
     androidTarget {
         compilations.all {
             kotlinOptions {
-                jvmTarget = "11"
+                jvmTarget = "17"
             }
         }
     }
@@ -43,21 +78,21 @@ kotlin {
             dependencies {
                 api(project(":domain"))
 
-                implementation(libs.ktor.client.core)
-                implementation(libs.ktor.client.json)
+                api(libs.ktor.client.core)
                 implementation(libs.ktor.client.logging)
-                implementation(libs.ktor.client.serialization)
-                implementation(libs.ktor.serialization.kotlinx.json)
                 implementation(libs.ktor.client.contentNegotiation)
 
-                implementation(libs.room.runtime)
+                api(libs.room.runtime)
                 implementation(libs.sqlite.bundled)
             }
         }
 
         val androidMain by getting {
             dependencies {
+                implementation(libs.ktor.client.android)
                 implementation(libs.ktor.client.okhttp)
+
+                implementation(libs.paging.room)
             }
         }
 
@@ -85,6 +120,13 @@ kotlin {
             dependencies {
             }
         }
+
+        val androidUnitTest by getting {
+            dependencies {
+                implementation(kotlin("test-junit"))
+                implementation(libs.junit.test)
+            }
+        }
     }
 }
 
@@ -93,5 +135,8 @@ room {
 }
 
 dependencies {
-    ksp(libs.room.compiler)
+    add("kspAndroid", libs.room.compiler)
+    add("kspIosSimulatorArm64", libs.room.compiler)
+    add("kspIosX64", libs.room.compiler)
+    add("kspIosArm64", libs.room.compiler)
 }
