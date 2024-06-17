@@ -19,9 +19,9 @@ KMP-Movies is a Kotlin Multi-platform application designed to bridge the gap bet
 - **Coroutines & Flow**
 - **Room (Database)**
 - **Ktor (Networking)**
-- **Moshi (JSON parser)**
+- **Ktor Kotlin Serializer (JSON parser)**
 - **Koin (DI)**
-- **Image Loader**
+- **Coil (Image Loader)**
 
 ## API & Design File:
 - Design: https://www.figma.com/file/vI6BpWMy3p02hogoFc7R08/App-Anime-%26-Movies-NEON-MODE-(Community)
