@@ -123,7 +123,8 @@ kotlin {
 
         val androidMain by getting {
             dependencies {
-                implementation(libs.androidx.activity)
+                implementation(compose.preview)
+                implementation(libs.androidx.activity.compose)
                 implementation(libs.androidx.appcompat)
                 implementation(libs.material)
 

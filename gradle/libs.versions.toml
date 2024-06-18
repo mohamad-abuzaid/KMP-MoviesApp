@@ -8,6 +8,7 @@ android-version-name = "1.0"
 
 compose = "2024.06.00"
 compose-plugin = "1.6.11"
+androidx-activityCompose = "1.9.0"
 nav_compose = "2.7.7"
 coil = "3.0.0-alpha06"
 junit = "4.13.2"
@@ -25,12 +26,10 @@ sqlite = "2.5.0-SNAPSHOT"
 timber = "5.0.1"
 appcompat = "1.7.0"
 material = "1.12.0"
-activity = "1.9.0"
 
 [libraries]
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 
 ## Compose
@@ -40,6 +39,7 @@ compose-icons-extended = { module = "androidx.compose.material:material-icons-ex
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "nav_compose" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 
 ## Coil
 coil-mp = { module = "io.coil-kt.coil3:coil", version.ref = "coil" }
