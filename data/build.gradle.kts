@@ -105,6 +105,9 @@ kotlin {
 
         val androidMain by getting {
             dependencies {
+                api(libs.room.runtime)
+                implementation(libs.sqlite.bundled)
+
                 implementation(libs.ktor.client.android)
                 implementation(libs.ktor.client.okhttp)
 
@@ -114,12 +117,18 @@ kotlin {
 
         val iosMain by creating {
             dependencies {
+                api(libs.room.runtime)
+                implementation(libs.sqlite.bundled)
+
                 implementation(libs.ktor.client.darwin)
             }
         }
 
         val desktopMain by getting {
             dependencies {
+                api(libs.room.runtime)
+                implementation(libs.sqlite.bundled)
+                
                 implementation(libs.ktor.client.okhttp)
             }
         }
@@ -139,14 +148,10 @@ room {
 }
 
 dependencies {
-    api(libs.room.runtime)
-    implementation(libs.sqlite.bundled)
-
     add("kspCommonMainMetadata", libs.room.compiler)
     add("kspAndroid", libs.room.compiler)
     add("kspDesktop", libs.room.compiler)
     add("kspIosSimulatorArm64", libs.room.compiler)
     add("kspIosX64", libs.room.compiler)
     add("kspIosArm64", libs.room.compiler)
-    ksp(libs.room.compiler)
 }
