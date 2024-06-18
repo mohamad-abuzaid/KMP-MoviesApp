@@ -1,5 +1,7 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 import java.io.FileInputStream
 import java.util.Properties
 
@@ -55,6 +57,23 @@ android {
 }
 
 kotlin {
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        moduleName = "data"
+        browser {
+            commonWebpackConfig {
+                outputFileName = "composeApp.js"
+                devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
+                    static = (static ?: mutableListOf()).apply {
+                        // Serve sources to debug inside browser
+                        add(project.projectDir.path)
+                    }
+                }
+            }
+        }
+        binaries.executable()
+    }
+
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
@@ -79,12 +98,8 @@ kotlin {
             dependencies {
                 api(project(":domain"))
 
-                api(libs.ktor.client.core)
                 implementation(libs.ktor.client.logging)
-                implementation(libs.ktor.client.contentNegotiation)
-
-                api(libs.room.runtime)
-                implementation(libs.sqlite.bundled)
+                implementation(libs.ktor.client.content.negotiation)
             }
         }
 
@@ -97,15 +112,7 @@ kotlin {
             }
         }
 
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
         val iosMain by creating {
-            dependsOn(commonMain)
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
-
             dependencies {
                 implementation(libs.ktor.client.darwin)
             }
@@ -117,18 +124,14 @@ kotlin {
             }
         }
 
-        val commonTest by getting {
+        val wasmJsMain by getting {
             dependencies {
-            }
-        }
-
-        val androidUnitTest by getting {
-            dependencies {
-                implementation(kotlin("test-junit"))
-                implementation(libs.junit.test)
+                implementation(libs.ktor.client.js)
             }
         }
     }
+
+    task("testClasses")
 }
 
 room {
@@ -136,8 +139,14 @@ room {
 }
 
 dependencies {
+    api(libs.room.runtime)
+    implementation(libs.sqlite.bundled)
+
+    add("kspCommonMainMetadata", libs.room.compiler)
     add("kspAndroid", libs.room.compiler)
+    add("kspDesktop", libs.room.compiler)
     add("kspIosSimulatorArm64", libs.room.compiler)
     add("kspIosX64", libs.room.compiler)
     add("kspIosArm64", libs.room.compiler)
+    ksp(libs.room.compiler)
 }

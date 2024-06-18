@@ -1,6 +1,7 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
@@ -58,13 +59,6 @@ android {
 }
 
 kotlin {
-    androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_17)
-        }
-    }
-
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         moduleName = "composeApp"
@@ -82,6 +76,13 @@ kotlin {
         binaries.executable()
     }
 
+    androidTarget {
+        @OptIn(ExperimentalKotlinGradlePluginApi::class)
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+        }
+    }
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -94,6 +95,14 @@ kotlin {
     }
     jvm("desktop")
 
+    targets.withType<KotlinNativeTarget> {
+        binaries {
+            all {
+                linkerOpts("-lsqlite3")
+            }
+        }
+    }
+
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -104,6 +113,11 @@ kotlin {
                 implementation(compose.material3)
                 implementation(compose.components.resources)
                 implementation(compose.components.uiToolingPreview)
+
+                implementation(libs.coil.mp)
+                implementation(libs.coil.compose.core)
+                implementation(libs.coil.compose)
+                //implementation(libs.coil.ktor)
             }
         }
 
@@ -114,9 +128,9 @@ kotlin {
                 implementation(libs.material)
 
                 implementation(project.dependencies.platform(libs.compose.bom))
-                implementation(libs.compose.coil)
                 implementation(libs.compose.icons)
                 implementation(libs.compose.icons.extended)
+                implementation(libs.compose.navigation)
 
                 implementation(libs.paging.compose.android)
             }
@@ -130,6 +144,7 @@ kotlin {
 
         val commonTest by getting {
             dependencies {
+                implementation(libs.kotlin.test)
             }
         }
 
@@ -140,6 +155,8 @@ kotlin {
             }
         }
     }
+
+    task("testClasses")
 }
 
 compose.desktop {
@@ -150,6 +167,10 @@ compose.desktop {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "me.abuzaid.kmpmovies"
             packageVersion = "1.0.0"
+
+            macOS { iconFile.set(project.file("app_icon/app-icon.icns")) }
+            windows { iconFile.set(project.file("app_icon/app-icon.ico")) }
+            linux { iconFile.set(project.file("app_icon/app-icon.png")) }
         }
     }
 }

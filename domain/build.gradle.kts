@@ -1,5 +1,7 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -28,6 +30,23 @@ android {
 }
 
 kotlin {
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        moduleName = "domain"
+        browser {
+            commonWebpackConfig {
+                outputFileName = "composeApp.js"
+                devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
+                    static = (static ?: mutableListOf()).apply {
+                        // Serve sources to debug inside browser
+                        add(project.projectDir.path)
+                    }
+                }
+            }
+        }
+        binaries.executable()
+    }
+
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
@@ -52,8 +71,9 @@ kotlin {
             dependencies {
                 api(libs.coroutines.core)
                 api(libs.koin.core)
-                api(libs.ktor.client.serialization)
 
+                api(libs.ktor.client.core)
+                api(libs.ktor.client.serialization)
 
                 api(libs.timber)
             }
@@ -68,22 +88,9 @@ kotlin {
                 api(libs.koin.compose)
             }
         }
-
-        val commonTest by getting {
-            dependencies {
-                api(kotlin("test-common"))
-                api(kotlin("test-annotations-common"))
-                api(libs.coroutines.test)
-            }
-        }
-
-        val androidUnitTest by getting {
-            dependencies {
-                implementation(kotlin("test-junit"))
-                implementation(libs.junit.test)
-            }
-        }
     }
+
+    task("testClasses")
 }
 
 dependencies {
