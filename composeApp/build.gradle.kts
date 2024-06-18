@@ -106,6 +106,9 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(project(":domain"))
+                implementation(project(":di"))
+
                 implementation(compose.ui)
                 implementation(compose.runtime)
                 implementation(compose.foundation)
@@ -177,9 +180,6 @@ compose.desktop {
 }
 
 dependencies {
-    implementation(project(":domain"))
-    implementation(project(":di"))
-
     debugImplementation(libs.compose.ui.tooling)
     debugImplementation(libs.compose.ui.test.manifest)
 }

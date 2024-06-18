@@ -6,7 +6,7 @@ import me.abuzaid.kmpmovies.di.miscModule
 import me.abuzaid.kmpmovies.di.repositoriesModule
 import me.abuzaid.kmpmovies.di.servicesModule
 import me.abuzaid.kmpmovies.di.useCasesModule
-import me.abuzaid.kmpmovies.di.viewModelsModule
+import di.viewModelsModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
