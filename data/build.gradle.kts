@@ -93,51 +93,48 @@ kotlin {
     }
     jvm("desktop")
 
+    applyDefaultHierarchyTemplate()
+
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                api(project(":domain"))
+        val desktopMain by getting
 
-                implementation(libs.ktor.client.logging)
-                implementation(libs.ktor.client.content.negotiation)
-            }
+        commonMain.dependencies {
+            api(project(":domain"))
+
+            implementation(libs.ktor.client.logging)
+            implementation(libs.ktor.client.content.negotiation)
         }
 
-        val androidMain by getting {
-            dependencies {
-                api(libs.room.runtime)
-                implementation(libs.sqlite.bundled)
-
-                implementation(libs.ktor.client.android)
-                implementation(libs.ktor.client.okhttp)
-
-                implementation(libs.paging.room)
-            }
-        }
-
-        val iosMain by creating {
+        val nonJsMain by creating {
+            dependsOn(commonMain.get())
             dependencies {
                 api(libs.room.runtime)
                 implementation(libs.sqlite.bundled)
-
-                implementation(libs.ktor.client.darwin)
             }
         }
 
-        val desktopMain by getting {
-            dependencies {
-                api(libs.room.runtime)
-                implementation(libs.sqlite.bundled)
-                
-                implementation(libs.ktor.client.okhttp)
-            }
+        androidMain.get().dependsOn(nonJsMain)
+        androidMain.dependencies {
+            implementation(libs.ktor.client.android)
+            implementation(libs.ktor.client.okhttp)
+
+            implementation(libs.paging.room)
         }
 
-        val wasmJsMain by getting {
-            dependencies {
-                implementation(libs.ktor.client.js)
-            }
+        iosMain.get().dependsOn(nonJsMain)
+        iosMain.dependencies {
+            implementation(libs.ktor.client.darwin)
         }
+
+        desktopMain.dependsOn(nonJsMain)
+        desktopMain.dependencies {
+            implementation(libs.ktor.client.okhttp)
+        }
+
+        wasmJsMain.dependencies {
+            implementation(libs.ktor.client.js)
+        }
+
     }
 
     task("testClasses")
