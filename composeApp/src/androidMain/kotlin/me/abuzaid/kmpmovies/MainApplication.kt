@@ -1,6 +1,7 @@
 package me.abuzaid.kmpmovies
 
 import android.app.Application
+import di.appModules
 import me.abuzaid.kmpmovies.di.databaseModule
 import me.abuzaid.kmpmovies.di.miscModule
 import me.abuzaid.kmpmovies.di.repositoriesModule
@@ -32,14 +33,7 @@ class MainApplication : Application() {
 
             // Declare modules
             modules(
-                listOf(
-                    viewModelsModule,
-                    useCasesModule,
-                    repositoriesModule,
-                    miscModule,
-                    databaseModule,
-                    servicesModule
-                )
+                appModules()
             )
         }
 
