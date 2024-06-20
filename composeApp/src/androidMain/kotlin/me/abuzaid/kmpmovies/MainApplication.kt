@@ -1,16 +1,9 @@
 package me.abuzaid.kmpmovies
 
 import android.app.Application
-import di.appModules
-import me.abuzaid.kmpmovies.di.databaseModule
-import me.abuzaid.kmpmovies.di.miscModule
-import me.abuzaid.kmpmovies.di.repositoriesModule
-import me.abuzaid.kmpmovies.di.servicesModule
-import me.abuzaid.kmpmovies.di.useCasesModule
-import di.viewModelsModule
+import di.initKoinAndroid
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.startKoin
 import timber.log.Timber
 
 /**
@@ -23,18 +16,14 @@ class MainApplication : Application() {
         Timber.d("onCreate()")
         super.onCreate()
 
-        startKoin {
-
+        initKoinAndroid(
+            appComponent = AndroidApplicationComponent()
+        ) {
             // Log Koin into Android logger
             androidLogger()
 
             // Reference Android context
             androidContext(this@MainApplication)
-
-            // Declare modules
-            modules(
-                appModules()
-            )
         }
 
         if (BuildConfig.DEBUG) {
