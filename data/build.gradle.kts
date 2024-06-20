@@ -94,20 +94,24 @@ kotlin {
     jvm("desktop")
 
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                api(project(":domain"))
+        val nonJsMain by creating
+        val iosMain by creating
 
-                implementation(libs.ktor.client.logging)
-                implementation(libs.ktor.client.content.negotiation)
-            }
+        commonMain.dependencies {
+            api(project(":domain"))
+
+            implementation(libs.ktor.client.logging)
+            implementation(libs.ktor.client.content.negotiation)
         }
 
-        val androidMain by getting {
-            dependencies {
-                api(libs.room.runtime)
-                implementation(libs.sqlite.bundled)
+        nonJsMain.dependencies {
+            api(libs.room.runtime)
+            implementation(libs.sqlite.bundled)
+        }
 
+        androidMain {
+            dependsOn(nonJsMain)
+            dependencies {
                 implementation(libs.ktor.client.android)
                 implementation(libs.ktor.client.okhttp)
 
@@ -115,28 +119,22 @@ kotlin {
             }
         }
 
-        val iosMain by creating {
+        iosMain {
+            dependsOn(nonJsMain)
             dependencies {
-                api(libs.room.runtime)
-                implementation(libs.sqlite.bundled)
-
                 implementation(libs.ktor.client.darwin)
             }
         }
 
         val desktopMain by getting {
+            dependsOn(nonJsMain)
             dependencies {
-                api(libs.room.runtime)
-                implementation(libs.sqlite.bundled)
-                
                 implementation(libs.ktor.client.okhttp)
             }
         }
 
-        val wasmJsMain by getting {
-            dependencies {
-                implementation(libs.ktor.client.js)
-            }
+        wasmJsMain.dependencies {
+            implementation(libs.ktor.client.js)
         }
     }
 
