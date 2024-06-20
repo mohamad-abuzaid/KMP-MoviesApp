@@ -104,59 +104,52 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(project(":domain"))
-                implementation(project(":di"))
+        val desktopMain by getting
+        val androidUnitTest by getting
 
-                implementation(compose.ui)
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-                implementation(compose.material)
-                implementation(compose.material3)
-                implementation(compose.components.resources)
-                implementation(compose.components.uiToolingPreview)
+        commonMain.dependencies {
+            implementation(project(":domain"))
+            implementation(project(":di"))
 
-                implementation(libs.coil.mp)
-                implementation(libs.coil.compose.core)
-                implementation(libs.coil.compose)
-                //implementation(libs.coil.ktor)
-            }
+            implementation(compose.ui)
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            implementation(compose.material)
+            implementation(compose.material3)
+            implementation(compose.components.resources)
+            implementation(compose.components.uiToolingPreview)
+
+            implementation(libs.coil.mp)
+            implementation(libs.coil.compose.core)
+            implementation(libs.coil.compose)
+            //implementation(libs.coil.ktor)
         }
 
-        val androidMain by getting {
-            dependencies {
-                implementation(compose.preview)
-                implementation(libs.androidx.activity.compose)
-                implementation(libs.androidx.appcompat)
-                implementation(libs.material)
+        androidMain.dependencies {
+            implementation(compose.preview)
+            implementation(libs.androidx.activity.compose)
+            implementation(libs.androidx.appcompat)
+            implementation(libs.material)
 
-                implementation(project.dependencies.platform(libs.compose.bom))
-                implementation(libs.compose.icons)
-                implementation(libs.compose.icons.extended)
-                implementation(libs.compose.navigation)
+            implementation(project.dependencies.platform(libs.compose.bom))
+            implementation(libs.compose.icons)
+            implementation(libs.compose.icons.extended)
+            implementation(libs.compose.navigation)
 
-                implementation(libs.paging.compose.android)
-            }
+            implementation(libs.paging.compose.android)
         }
 
-        val desktopMain by getting {
-            dependencies {
-                implementation(compose.desktop.currentOs)
-            }
+        desktopMain.dependencies {
+            implementation(compose.desktop.currentOs)
         }
 
-        val commonTest by getting {
-            dependencies {
-                implementation(libs.kotlin.test)
-            }
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
         }
 
-        val androidUnitTest by getting {
-            dependencies {
-                implementation(kotlin("test-junit"))
-                implementation(libs.junit.test)
-            }
+        androidUnitTest.dependencies {
+            implementation(kotlin("test-junit"))
+            implementation(libs.junit.test)
         }
     }
 
