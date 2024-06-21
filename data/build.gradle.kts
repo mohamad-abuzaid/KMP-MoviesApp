@@ -116,20 +116,16 @@ kotlin {
 
             implementation(libs.ktor.client.logging)
             implementation(libs.ktor.client.content.negotiation)
-        }
 
-        val nonJsMain by getting {
-            dependencies {
-                api(libs.room.runtime)
-                implementation(libs.sqlite.bundled)
-            }
+//            api(libs.room.runtime)
+//            implementation(libs.sqlite.bundled)
         }
 
         androidMain.dependencies {
             implementation(libs.ktor.client.android)
             implementation(libs.ktor.client.okhttp)
 
-            implementation(libs.paging.room)
+            //implementation(libs.paging.room)
         }
 
         iosMain.dependencies {
