@@ -1,9 +1,9 @@
 package me.abuzaid.kmpmovies.data.database.converters
 
 import androidx.room.TypeConverter
+import io.github.aakira.napier.Napier
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import timber.log.Timber
 
 /**
  * Created by "Mohamad Abuzaid" on 25/05/2024.
@@ -22,7 +22,7 @@ class DataTypeConverter {
         return try {
             Json.decodeFromString(value)
         } catch (ex: Exception) {
-            Timber.tag("DataTypeConverter").e(ex)
+            Napier.e("toIntList error", ex, "DataTypeConverter")
             null
         }
     }
@@ -41,7 +41,7 @@ class DataTypeConverter {
         return try {
             Json.decodeFromString(value)
         } catch (ex: Exception) {
-            Timber.tag("DataTypeConverter").e(ex)
+            Napier.e("toMap error", ex, "DataTypeConverter")
             null
         }
     }

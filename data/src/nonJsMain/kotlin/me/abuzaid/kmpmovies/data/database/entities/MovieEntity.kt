@@ -3,7 +3,6 @@ package me.abuzaid.kmpmovies.data.database.entities
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import java.io.Serializable
 
 /**
  * Created by "Mohamad Abuzaid" on 25/05/2024.
@@ -18,4 +17,4 @@ data class MovieEntity(
     val tId: Long = 0,
     val id: String?,
     val name: String?
-) : Serializable
+)

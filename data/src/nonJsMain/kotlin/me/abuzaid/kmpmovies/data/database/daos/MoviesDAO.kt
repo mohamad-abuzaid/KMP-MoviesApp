@@ -15,7 +15,7 @@ import me.abuzaid.kmpmovies.data.database.entities.MovieEntity
 interface MoviesDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllMovies(languages: List<MovieEntity>): List<Long>
+    suspend fun insertAllMovies(languages: List<MovieEntity>): List<Long>
 
     @Query("SELECT * FROM movies ORDER BY tId")
     fun getMovies(): Flow<List<MovieEntity>>
