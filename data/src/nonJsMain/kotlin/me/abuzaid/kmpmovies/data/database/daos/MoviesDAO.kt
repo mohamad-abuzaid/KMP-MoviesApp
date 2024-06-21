@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
-import me.abuzaid.movies.data.database.entities.MovieEntity
+import me.abuzaid.kmpmovies.data.database.entities.MovieEntity
 
 /**
  * Created by "Mohamad Abuzaid" on 25/05/2024.

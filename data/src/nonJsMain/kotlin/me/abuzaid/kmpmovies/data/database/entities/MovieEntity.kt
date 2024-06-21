@@ -1,4 +1,4 @@
-package me.abuzaid.movies.data.database.entities
+package me.abuzaid.kmpmovies.data.database.entities
 
 import androidx.room.Entity
 import androidx.room.Index
