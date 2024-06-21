@@ -57,6 +57,23 @@ android {
 }
 
 kotlin {
+    @OptIn(ExperimentalKotlinGradlePluginApi::class)
+    applyDefaultHierarchyTemplate {
+        // create a new group that
+        // depends on `common`
+        common {
+            // Define group name without
+            // `Main` as suffix
+            group("nonJs") {
+                // Provide which targets would
+                // be part of this group
+                withAndroidTarget()
+                withIos()
+                withJvm()
+            }
+        }
+    }
+
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         moduleName = "data"
@@ -94,9 +111,6 @@ kotlin {
     jvm("desktop")
 
     sourceSets {
-        val nonJsMain by creating
-        val iosMain by creating
-
         commonMain.dependencies {
             api(project(":domain"))
 
@@ -104,30 +118,25 @@ kotlin {
             implementation(libs.ktor.client.content.negotiation)
         }
 
-        nonJsMain.dependencies {
-            api(libs.room.runtime)
-            implementation(libs.sqlite.bundled)
-        }
-
-        androidMain {
-            dependsOn(nonJsMain)
+        val nonJsMain by getting {
             dependencies {
-                implementation(libs.ktor.client.android)
-                implementation(libs.ktor.client.okhttp)
-
-                implementation(libs.paging.room)
+                api(libs.room.runtime)
+                implementation(libs.sqlite.bundled)
             }
         }
 
-        iosMain {
-            dependsOn(nonJsMain)
-            dependencies {
-                implementation(libs.ktor.client.darwin)
-            }
+        androidMain.dependencies {
+            implementation(libs.ktor.client.android)
+            implementation(libs.ktor.client.okhttp)
+
+            implementation(libs.paging.room)
+        }
+
+        iosMain.dependencies {
+            implementation(libs.ktor.client.darwin)
         }
 
         val desktopMain by getting {
-            dependsOn(nonJsMain)
             dependencies {
                 implementation(libs.ktor.client.okhttp)
             }
