@@ -67,26 +67,22 @@ kotlin {
     jvm("desktop")
 
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                api(libs.coroutines.core)
-                api(libs.koin.core)
+        commonMain.dependencies {
+            api(libs.coroutines.core)
+            api(libs.koin.core)
 
-                api(libs.ktor.client.core)
-                api(libs.ktor.client.serialization)
+            api(libs.ktor.client.core)
+            api(libs.ktor.client.serialization)
 
-                api(libs.timber)
-            }
+            api(libs.timber)
         }
 
-        val androidMain by getting {
-            dependencies {
-                api(libs.coroutines.android)
-                api(libs.paging.common)
+        androidMain.dependencies {
+            api(libs.coroutines.android)
+            api(libs.paging.common)
 
-                api(libs.koin.android)
-                api(libs.koin.compose)
-            }
+            api(libs.koin.android)
+            api(libs.koin.compose)
         }
     }
 

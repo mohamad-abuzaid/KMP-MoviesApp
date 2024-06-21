@@ -1,13 +1,10 @@
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
-import di.appModules
-import org.koin.core.context.startKoin
+import di.initKoinDesktop
 import presentation.App
 
 fun main() = application {
-    startKoin {
-        modules(appModules())
-    }.koin
+    initKoinDesktop(appComponent = JvmApplicationComponent())
 
     Window(
         onCloseRequest = ::exitApplication,

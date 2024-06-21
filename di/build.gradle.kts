@@ -61,15 +61,8 @@ kotlin {
     jvm("desktop")
 
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(project(":data"))
-            }
-        }
-
-        val androidMain by getting {
-            dependencies {
-            }
+        commonMain.dependencies {
+            implementation(project(":data"))
         }
     }
 
