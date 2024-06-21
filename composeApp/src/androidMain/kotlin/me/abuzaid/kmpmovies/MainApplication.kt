@@ -16,9 +16,7 @@ class MainApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        initKoinAndroid(
-            appComponent = AndroidApplicationComponent()
-        ) {
+        initKoinAndroid {
             // Log Koin into Android logger
             androidLogger()
 

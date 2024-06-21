@@ -8,7 +8,7 @@ import presentation.App
 fun main() = application {
     Napier.base(DebugAntilog("Napier_Jvm"))
 
-    initKoinDesktop(appComponent = JvmApplicationComponent())
+    initKoinDesktop()
 
     Window(
         onCloseRequest = ::exitApplication,
