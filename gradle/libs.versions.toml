@@ -23,14 +23,14 @@ paging = "3.3.0"
 ktor = "3.0.0-wasm2"
 room = "2.7.0-alpha04"
 sqlite = "2.5.0-SNAPSHOT"
-timber = "5.0.1"
+napier = "2.7.1"
 appcompat = "1.7.0"
 material = "1.12.0"
 
 [libraries]
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
+napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 
 ## Compose
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "compose" }
