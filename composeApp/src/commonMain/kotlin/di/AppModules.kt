@@ -1,8 +1,6 @@
 package di
 
-import me.abuzaid.kmpmovies.di.commonDatabaseModule
 import me.abuzaid.kmpmovies.di.miscModule
-import me.abuzaid.kmpmovies.di.platformDatabaseModule
 import me.abuzaid.kmpmovies.di.repositoriesModule
 import me.abuzaid.kmpmovies.di.servicesModule
 import me.abuzaid.kmpmovies.di.useCasesModule
@@ -16,7 +14,5 @@ fun appModules() = listOf(
     useCasesModule,
     repositoriesModule,
     miscModule,
-    commonDatabaseModule,
-    platformDatabaseModule,
     servicesModule
 )

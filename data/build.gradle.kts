@@ -104,13 +104,24 @@ kotlin {
                 // Provide which targets would
                 // be part of this group
                 withAndroidTarget()
-                withIos()
                 withJvm()
+                group("ios") {
+                    withIos()
+                }
             }
         }
     }
 
     sourceSets {
+        all{
+            languageSettings {
+                @OptIn(ExperimentalKotlinGradlePluginApi::class)
+                compilerOptions{
+                    freeCompilerArgs.add("-Xexpect-actual-classes")
+                }
+            }
+        }
+
         commonMain.dependencies {
             api(project(":domain"))
 

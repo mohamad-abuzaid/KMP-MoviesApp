@@ -103,9 +103,38 @@ kotlin {
         }
     }
 
+    @OptIn(ExperimentalKotlinGradlePluginApi::class)
+    applyDefaultHierarchyTemplate {
+        // create a new group that
+        // depends on `common`
+        common {
+            // Define group name without
+            // `Main` as suffix
+            group("nonJs") {
+                // Provide which targets would
+                // be part of this group
+                withAndroidTarget()
+                withJvm()
+                group("ios") {
+                    withIos()
+                }
+            }
+        }
+    }
+
     sourceSets {
+        val nonJsMain by getting
         val desktopMain by getting
         val androidUnitTest by getting
+
+        all{
+            languageSettings {
+                @OptIn(ExperimentalKotlinGradlePluginApi::class)
+                compilerOptions{
+                    freeCompilerArgs.add("-Xexpect-actual-classes")
+                }
+            }
+        }
 
         commonMain.dependencies {
             implementation(project(":domain"))

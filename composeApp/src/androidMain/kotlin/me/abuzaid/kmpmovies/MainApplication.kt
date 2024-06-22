@@ -4,6 +4,7 @@ import android.app.Application
 import di.initKoinAndroid
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
+import me.abuzaid.kmpmovies.domain.BuildConfig
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 
