@@ -1,5 +1,6 @@
 package me.abuzaid.kmpmovies.di
 
+import me.abuzaid.kmpmovies.data.database.AppDatabase
 import org.koin.dsl.module
 
 /**
@@ -7,5 +8,5 @@ import org.koin.dsl.module
  * Email: mabuzaid@sure.com.sa
  */
 actual val platformDatabaseModule = module {
-    //    single { AppDatabase.getInstance(context = get()) }
+    single { AppDatabase.getInstance(builder = get()) }
 }

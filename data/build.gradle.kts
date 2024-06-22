@@ -1,7 +1,9 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompileCommon
 import java.io.FileInputStream
 import java.util.Properties
 
@@ -113,10 +115,10 @@ kotlin {
     }
 
     sourceSets {
-        all{
+        all {
             languageSettings {
                 @OptIn(ExperimentalKotlinGradlePluginApi::class)
-                compilerOptions{
+                compilerOptions {
                     freeCompilerArgs.add("-Xexpect-actual-classes")
                 }
             }
@@ -143,8 +145,12 @@ kotlin {
             implementation(libs.paging.room)
         }
 
-        iosMain.dependencies {
-            implementation(libs.ktor.client.darwin)
+        iosMain {
+            // Fixes RoomDB unresolved reference 'instantiateImpl' in iosMain
+            kotlin.srcDir("build/generated/ksp/metadata")
+            dependencies {
+                implementation(libs.ktor.client.darwin)
+            }
         }
 
         val desktopMain by getting {
@@ -161,6 +167,13 @@ kotlin {
     task("testClasses")
 }
 
+// https://github.com/JetBrains/compose-multiplatform/issues/4928
+tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCompile<*>>().configureEach {
+    if (name != "kspCommonMainKotlinMetadata") {
+        dependsOn("kspCommonMainKotlinMetadata")
+    }
+}
+
 room {
     schemaDirectory("$projectDir/schemas")
 }
@@ -169,7 +182,7 @@ dependencies {
     add("kspCommonMainMetadata", libs.room.compiler)
     add("kspAndroid", libs.room.compiler)
     add("kspDesktop", libs.room.compiler)
-    add("kspIosSimulatorArm64", libs.room.compiler)
-    add("kspIosX64", libs.room.compiler)
-    add("kspIosArm64", libs.room.compiler)
+//    add("kspIosSimulatorArm64", libs.room.compiler)
+//    add("kspIosX64", libs.room.compiler)
+//    add("kspIosArm64", libs.room.compiler)
 }
