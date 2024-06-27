@@ -61,6 +61,15 @@ kotlin {
     jvm("desktop")
 
     sourceSets {
+        all {
+            languageSettings {
+                @OptIn(ExperimentalKotlinGradlePluginApi::class)
+                compilerOptions {
+                    freeCompilerArgs.add("-Xexpect-actual-classes")
+                }
+            }
+        }
+
         commonMain.dependencies {
             implementation(project(":data"))
         }

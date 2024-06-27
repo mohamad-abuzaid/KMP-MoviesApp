@@ -4,12 +4,13 @@ import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 import java.io.FileInputStream
 import java.util.Properties
+import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.room)
+    id("com.codingfeline.buildkonfig") version "0.15.1"
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -40,9 +41,6 @@ android {
     buildTypes {
         all {
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
-            buildConfigField("String", "BASE_URL", "\"${config.commonProperties["base_url"]}\"")
-            buildConfigField("String", "API_KEY", "\"${config.commonProperties["api"]}\"")
-            buildConfigField("String", "TOKEN", "\"${config.commonProperties["token"]}\"")
         }
     }
 
@@ -53,6 +51,18 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+    }
+}
+
+buildkonfig {
+    packageName = "me.abuzaid.kmpmovies.data"
+    // objectName = "YourAwesomeConfig"
+    // exposeObjectWithName = "YourAwesomePublicConfig"
+
+    defaultConfigs {
+        buildConfigField(STRING, "BASE_URL", "\"${config.commonProperties["base_url"]}\"")
+        buildConfigField(STRING, "API_KEY", "\"${config.commonProperties["api"]}\"")
+        buildConfigField(STRING, "TOKEN", "\"${config.commonProperties["token"]}\"")
     }
 }
 
@@ -94,21 +104,25 @@ kotlin {
     jvm("desktop")
 
     sourceSets {
+        all {
+            languageSettings {
+                @OptIn(ExperimentalKotlinGradlePluginApi::class)
+                compilerOptions {
+                    freeCompilerArgs.add("-Xexpect-actual-classes")
+                }
+            }
+        }
+
         commonMain.dependencies {
             api(project(":domain"))
 
             implementation(libs.ktor.client.logging)
             implementation(libs.ktor.client.content.negotiation)
-
-//            api(libs.room.runtime)
-//            implementation(libs.sqlite.bundled)
         }
 
         androidMain.dependencies {
             implementation(libs.ktor.client.android)
             implementation(libs.ktor.client.okhttp)
-
-            //implementation(libs.paging.room)
         }
 
         iosMain.dependencies {
@@ -127,17 +141,4 @@ kotlin {
     }
 
     task("testClasses")
-}
-
-room {
-    schemaDirectory("$projectDir/schemas")
-}
-
-dependencies {
-    add("kspCommonMainMetadata", libs.room.compiler)
-    add("kspAndroid", libs.room.compiler)
-    add("kspDesktop", libs.room.compiler)
-    add("kspIosSimulatorArm64", libs.room.compiler)
-    add("kspIosX64", libs.room.compiler)
-    add("kspIosArm64", libs.room.compiler)
 }

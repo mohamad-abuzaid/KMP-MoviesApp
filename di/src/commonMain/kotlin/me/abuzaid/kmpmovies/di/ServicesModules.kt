@@ -1,5 +1,6 @@
 package me.abuzaid.kmpmovies.di
 
+import me.abuzaid.kmpmovies.data.network.di.networkModule
 import org.koin.dsl.module
 
 /**
@@ -7,7 +8,7 @@ import org.koin.dsl.module
  * Email: m.abuzaid.ali@gmail.com
  */
 val servicesModule = module {
-//    includes(ktorModule)
+    includes(networkModule)
 
 //    single<MoviesApiService> { get<Ktor>().create(MoviesApiService::class.java) }
 }
