@@ -9,7 +9,7 @@ import presentation.App
 fun main() {
     Napier.base(DebugAntilog("Napier_WasmJs"))
 
-    initKoinWasmJs(appComponent = JsApplicationComponent())
+    initKoinWasmJs()
 
     CanvasBasedWindow(canvasElementId = "ComposeTarget") { App() }
 }
