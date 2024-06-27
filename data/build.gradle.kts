@@ -1,5 +1,5 @@
+import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 import java.io.FileInputStream
@@ -67,6 +67,9 @@ buildkonfig {
 }
 
 kotlin {
+    androidTarget()
+    jvm("desktop")
+
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         moduleName = "data"
@@ -84,13 +87,6 @@ kotlin {
         binaries.executable()
     }
 
-    androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_17)
-        }
-    }
-
     listOf(
         iosX64(),
         iosArm64(),
@@ -101,7 +97,6 @@ kotlin {
             isStatic = true
         }
     }
-    jvm("desktop")
 
     sourceSets {
         all {
@@ -135,8 +130,10 @@ kotlin {
             }
         }
 
-        wasmJsMain.dependencies {
-            implementation(libs.ktor.client.js)
+        val wasmJsMain by getting {
+            dependencies {
+                implementation(libs.ktor.client.js)
+            }
         }
     }
 
