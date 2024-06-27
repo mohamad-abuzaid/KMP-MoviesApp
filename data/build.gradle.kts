@@ -7,6 +7,7 @@ import java.util.Properties
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.ksp)
     id("com.codingfeline.buildkonfig") version "0.15.1"
 }
