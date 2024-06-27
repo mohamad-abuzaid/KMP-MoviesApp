@@ -147,7 +147,7 @@ kotlin {
 
         iosMain {
             // Fixes RoomDB unresolved reference 'instantiateImpl' in iosMain
-            kotlin.srcDir("build/generated/ksp/metadata")
+            kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
             dependencies {
                 implementation(libs.ktor.client.darwin)
             }
@@ -168,7 +168,15 @@ kotlin {
 }
 
 // https://github.com/JetBrains/compose-multiplatform/issues/4928
-tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCompile<*>>().configureEach {
+/*
+tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCompile<*>>().all {
+    if(name != "kspCommonMainKotlinMetadata") {
+        dependsOn("kspCommonMainKotlinMetadata")
+    }
+}*/
+
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().all {
     if (name != "kspCommonMainKotlinMetadata") {
         dependsOn("kspCommonMainKotlinMetadata")
     }
