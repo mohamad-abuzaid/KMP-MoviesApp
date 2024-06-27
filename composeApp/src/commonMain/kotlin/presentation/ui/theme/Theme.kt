@@ -6,9 +6,10 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import presentation.ui.utils.ChangeStatusBarColors
 
 
-private val DarkColorScheme = darkColorScheme(
+val DarkColorScheme = darkColorScheme(
     background = Background,
     primary = Color.White,
     secondary = Content,
@@ -16,7 +17,7 @@ private val DarkColorScheme = darkColorScheme(
     primaryContainer = Container
 )
 
-private val LightColorScheme = lightColorScheme(
+val LightColorScheme = lightColorScheme(
     background = Background,
     primary = Color.White,
     secondary = Content,
@@ -31,6 +32,8 @@ fun MoviesTheme(
     //dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
+    ChangeStatusBarColors(darkTheme)
+
     MaterialTheme(
         colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme,
         typography = getTypography(),
