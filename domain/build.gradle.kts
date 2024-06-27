@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
@@ -30,6 +28,9 @@ android {
 }
 
 kotlin {
+    androidTarget()
+    jvm("desktop")
+
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         moduleName = "domain"
@@ -47,13 +48,6 @@ kotlin {
         binaries.executable()
     }
 
-    androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_17)
-        }
-    }
-
     listOf(
         iosX64(),
         iosArm64(),
@@ -64,7 +58,6 @@ kotlin {
             isStatic = true
         }
     }
-    jvm("desktop")
 
     sourceSets {
         commonMain.dependencies {
