@@ -1,7 +1,7 @@
 package me.abuzaid.kmpmovies.data.network.di
 
 import io.ktor.client.HttpClient
-import me.abuzaid.kmpmovies.data.BuildConfig
+import me.abuzaid.kmpmovies.data.BuildKonfig
 import me.abuzaid.kmpmovies.data.network.factory.PlatformHttpClient
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -11,8 +11,8 @@ import org.koin.dsl.module
  * Email: m.abuzaid.ali@gmail.com
  */
 val networkModule = module {
-    single(named("dataBaseUrl")) { BuildConfig.BASE_URL }
-    single(named("accessToken")) { BuildConfig.TOKEN }
+    single(named("dataBaseUrl")) { BuildKonfig.BASE_URL }
+    single(named("accessToken")) { BuildKonfig.TOKEN }
 
     single<HttpClient> {
         PlatformHttpClient().create(

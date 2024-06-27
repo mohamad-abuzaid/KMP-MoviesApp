@@ -97,15 +97,6 @@ kotlin {
     }
 
     sourceSets {
-        all {
-            languageSettings {
-                @OptIn(ExperimentalKotlinGradlePluginApi::class)
-                compilerOptions {
-                    freeCompilerArgs.add("-Xexpect-actual-classes")
-                }
-            }
-        }
-
         val desktopMain by getting
         val androidUnitTest by getting
 

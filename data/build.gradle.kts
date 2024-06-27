@@ -1,10 +1,8 @@
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 import java.io.FileInputStream
 import java.util.Properties
-import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -56,7 +54,7 @@ android {
 
 buildkonfig {
     packageName = "me.abuzaid.kmpmovies.data"
-    // objectName = "YourAwesomeConfig"
+     objectName = "BuildKonfig"
     // exposeObjectWithName = "YourAwesomePublicConfig"
 
     defaultConfigs {
@@ -99,15 +97,6 @@ kotlin {
     }
 
     sourceSets {
-        all {
-            languageSettings {
-                @OptIn(ExperimentalKotlinGradlePluginApi::class)
-                compilerOptions {
-                    freeCompilerArgs.add("-Xexpect-actual-classes")
-                }
-            }
-        }
-
         commonMain.dependencies {
             api(project(":domain"))
 

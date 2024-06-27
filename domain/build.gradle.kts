@@ -60,15 +60,6 @@ kotlin {
     }
 
     sourceSets {
-        all {
-            languageSettings {
-                @OptIn(ExperimentalKotlinGradlePluginApi::class)
-                compilerOptions {
-                    freeCompilerArgs.add("-Xexpect-actual-classes")
-                }
-            }
-        }
-
         commonMain.dependencies {
             api(libs.coroutines.core)
             api(libs.koin.core)
