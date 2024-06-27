@@ -11,6 +11,7 @@ import me.abuzaid.kmpmovies.di.useCasesModule
  */
 fun appModules() = listOf(
     viewModelsModule,
+    storageModule,
     useCasesModule,
     repositoriesModule,
     miscModule,

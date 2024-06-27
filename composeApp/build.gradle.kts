@@ -116,6 +116,8 @@ kotlin {
             implementation(libs.coil.compose.core)
             implementation(libs.coil.compose)
             //implementation(libs.coil.ktor)
+
+            implementation(libs.russhwolf)
         }
 
         androidMain.dependencies {

@@ -24,6 +24,7 @@ ktor = "3.0.0-wasm2"
 room = "2.7.0-alpha04"
 sqlite = "2.5.0-SNAPSHOT"
 napier = "2.7.1"
+russhwolf = "1.1.1"
 appcompat = "1.7.0"
 material = "1.12.0"
 
@@ -31,6 +32,7 @@ material = "1.12.0"
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }
+russhwolf = { module = "com.russhwolf:multiplatform-settings-no-arg", version.ref = "russhwolf" }
 
 ## Compose
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "compose" }
