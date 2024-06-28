@@ -5,7 +5,7 @@ import org.koin.dsl.KoinAppDeclaration
 
 /**
  * Created by "Mohamad Abuzaid" on 20/06/2024.
- * Email: mabuzaid@sure.com.sa
+ * Email: m.abuzaid.ali@gmail.com
  */
 fun initKoin(
     appDeclaration: KoinAppDeclaration = {},

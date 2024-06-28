@@ -7,7 +7,7 @@ import me.abuzaid.kmpmovies.di.useCasesModule
 
 /**
  * Created by "Mohamad Abuzaid" on 18/06/2024.
- * Email: mabuzaid@sure.com.sa
+ * Email: m.abuzaid.ali@gmail.com
  */
 fun appModules() = listOf(
     viewModelsModule,

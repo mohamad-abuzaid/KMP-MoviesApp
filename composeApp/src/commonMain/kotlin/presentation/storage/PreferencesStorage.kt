@@ -7,7 +7,7 @@ import com.russhwolf.settings.set
  * Created by "Mohamad Abuzaid" on 01/06/2024.
  * Email: m.abuzaid.ali@gmail.com
  */
-class PreferencesStorage constructor(private val settings: Settings) : ILocalPreferencesStorage {
+class PreferencesStorage(private val settings: Settings) : ILocalPreferencesStorage {
     override fun putString(key: String, value: String) {
         settings[key] = value
     }

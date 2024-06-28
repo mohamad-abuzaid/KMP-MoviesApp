@@ -18,7 +18,7 @@ import presentation.ui.theme.LightColorScheme
 
 /**
  * Created by "Mohamad Abuzaid" on 27/06/2024.
- * Email: mabuzaid@sure.com.sa
+ * Email: m.abuzaid.ali@gmail.com
  */
 @OptIn(ExperimentalForeignApi::class)
 @Composable

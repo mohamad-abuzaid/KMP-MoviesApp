@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">KMP-Movies</string>
+
+    <!--    GENERAL-->
+    <string name="save">حفظ</string>
+    <string name="confirm">تأكيد</string>
+    <string name="reset">إعادة ضبط</string>
+    <string name="yes">نعم</string>
+    <string name="no">لا</string>
+    <string name="cancel">إلغاء</string>
+    <string name="more">المزيد</string>
+    <string name="search">بحث</string>
+    <string name="sort">ترتيب</string>
+    <string name="filter">تصفية</string>
+    <string name="date_gregorian">%s</string>
+    <string name="date_hijri">هـ</string>
+    <string name="unknown">المعلومة غير متوفرة</string>
+    <string name="ok">حسناً</string>
+
+    <!--    RESPONSE SUCCESS-->
+    <string name="login_success">تم تسجيل الدخول بنجاح</string>
+
+    <!--    RESPONSE ERRORS-->
+    <string name="unauthorized_access">لا يوجد صلاحية لهذا الأمر. يرجى تسجيل الدخول مرة أخرى.</string>
+    <string name="session_timeout">انتهت صلاحية الجلسة. يرجى تسجيل الدخول مرة أخرى.</string>
+    <string name="invalid_input">بيانات غبر صحيحة. يرجى المحاولة مرة أخرى لاحقًا.</string>
+    <string name="service_not_available">الخدمة غير متاحة الآن. يرجى المحاولة مرة أخرى لاحقًا.</string>
+    <string name="connection_time_out">انتهت صلاحية الاتصال. يرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى.</string>
+    <string name="no_connection">لا يوجد اتصال، يرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى.</string>
+    <string name="internal_server_error">خطأ داخلي في الخادم</string>
+    <string name="unknown_error">حدث خطأ. يرجى المحاولة مرة أخرى لاحقًا</string>
+
+    <!--    LOADING MESSAGES-->
+    <string name="no_content">لا يوجد نتائج بحث</string>
+    <string name="error_occurred">عذراً حدث خطأ</string>
+    <string name="loading">جاري التحميل…</string>
+    <string name="try_again">حاول مرة أخرى لاحقا</string>
+
+    <string name="no_app_found_to_open_file">لا يوجد تطبيق لفتح الملف</string>
+</resources>

@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">KMP-Movies</string>
+
+    <!--    GENERAL-->
+    <string name="save">Save</string>
+    <string name="confirm">Submit</string>
+    <string name="reset">Reset</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="cancel">Cancel</string>
+    <string name="more">More</string>
+    <string name="search">Search</string>
+    <string name="sort">Sort</string>
+    <string name="filter">Filter</string>
+    <string name="date_calendar" translatable="false">%s\n%s\n%s</string>
+    <string name="date_gregorian">%s</string>
+    <string name="date_hijri">h</string>
+    <string name="unknown">Unknown</string>
+    <string name="ok">OK</string>
+
+    <!--    RESPONSE SUCCESS-->
+    <string name="login_success">Login Success</string>
+
+    <!--    RESPONSE ERRORS-->
+    <string name="unauthorized_access">Unauthorized Access. Please login again.</string>
+    <string name="session_timeout">Session timed out. Please login again.</string>
+    <string name="invalid_input">Invalid Input. Please try again.</string>
+    <string name="service_not_available">Service unavailable now. Please try again later.</string>
+    <string name="connection_time_out">Connection timed out. Please check your Internet connection and try again</string>
+    <string name="no_connection">No connection, please check your Internet connection and try again</string>
+    <string name="internal_server_error">Internal Server Error</string>
+    <string name="unknown_error">An error occurred. Please try again later</string>
+
+    <!--    LOADING MESSAGES-->
+    <string name="no_content">No Content</string>
+    <string name="error_occurred">An error occurred.</string>
+    <string name="loading">Loading…</string>
+    <string name="try_again">Try Again Later</string>
+
+    <string name="no_app_found_to_open_file">No app found to open this file</string>
+</resources>
