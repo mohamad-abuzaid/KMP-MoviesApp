@@ -113,6 +113,8 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
 
             implementation(libs.voyager.navigation)
+            implementation(libs.voyager.screenmodel)
+            implementation(libs.voyager.koin)
 
             implementation(libs.coil.mp)
             implementation(libs.coil.compose.core)
