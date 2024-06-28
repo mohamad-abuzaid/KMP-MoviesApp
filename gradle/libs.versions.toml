@@ -9,7 +9,7 @@ android-version-name = "1.0"
 compose = "2024.06.00"
 compose-plugin = "1.6.11"
 androidx-activityCompose = "1.9.0"
-nav_compose = "2.7.7"
+voyager = "1.1.0-beta02"
 coil = "3.0.0-alpha06"
 junit = "4.13.2"
 kotlin = "2.0.0"
@@ -40,8 +40,9 @@ compose-icons = { module = "androidx.compose.material:material-icons-core" }
 compose-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
-compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "nav_compose" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
+voyager-navigation = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
+voyager-screenmodel = { module = "cafe.adriel.voyager:voyager-screenmodel", version.ref = "voyager" }
 
 ## Coil
 coil-mp = { module = "io.coil-kt.coil3:coil", version.ref = "coil" }

@@ -112,6 +112,9 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
 
+            implementation(libs.voyager.navigation)
+            implementation(libs.voyager.screenmodel)
+
             implementation(libs.coil.mp)
             implementation(libs.coil.compose.core)
             implementation(libs.coil.compose)
@@ -129,7 +132,6 @@ kotlin {
             implementation(project.dependencies.platform(libs.compose.bom))
             implementation(libs.compose.icons)
             implementation(libs.compose.icons.extended)
-            implementation(libs.compose.navigation)
 
             implementation(libs.paging.compose.android)
         }

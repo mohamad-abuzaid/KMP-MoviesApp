@@ -15,7 +15,6 @@ import presentation.storage.Preference
 import presentation.ui.utils.LocalLang
 
 class MainActivity : ComponentActivity() {
-    private lateinit var navController: NavHostController
     private val prefs: ILocalPreferencesStorage by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,8 +23,6 @@ class MainActivity : ComponentActivity() {
         val lang = prefs.getString(Preference.LANGUAGE_KEY, "ar")
 
         setContent {
-            navController = rememberNavController()
-
             CompositionLocalProvider(
                 LocalLang provides lang
             ) {
