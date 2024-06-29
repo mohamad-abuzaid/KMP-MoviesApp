@@ -50,7 +50,7 @@ fun SplashScreenContent(prefs: ILocalPreferencesStorage?) {
     LaunchedEffect(Unit) {
         delay(3000)
         if (firstTime) {
-            //navigator.push(LanguageScreen())
+            navigator.push(LanguageSelectScreen())
         } else {
             //navigator.push(HomeScreen())
         }

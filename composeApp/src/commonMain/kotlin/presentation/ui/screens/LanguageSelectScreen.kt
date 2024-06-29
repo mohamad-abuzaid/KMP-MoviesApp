@@ -15,13 +15,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import kmp_movies.composeapp.generated.resources.Res
+import kmp_movies.composeapp.generated.resources.language_subtitle_ar
+import kmp_movies.composeapp.generated.resources.language_subtitle_en
+import kmp_movies.composeapp.generated.resources.language_title
 import kmp_movies.composeapp.generated.resources.save
-import me.abuzaid.movies.navigation.MainScreens
-import me.abuzaid.movies.utils.findActivity
 import org.jetbrains.compose.resources.stringResource
+import org.koin.mp.KoinPlatform
+import presentation.localization.Localization
 import presentation.localization.LocalizationUtils
 import presentation.storage.ILocalPreferencesStorage
 import presentation.storage.Preference
@@ -33,10 +38,21 @@ import presentation.ui.composables.pages.ScreenPage
  * Created by "Mohamad Abuzaid" on 01/06/2024.
  * Email: m.abuzaid.ali@gmail.com
  */
+class LanguageSelectScreen : Screen {
+    @Composable
+    override fun Content() {
+        val prefs: ILocalPreferencesStorage? = KoinPlatform.getKoin().getOrNull()
+
+        LanguageSelectScreenContent(prefs)
+    }
+}
+
 @Composable
-fun LanguageSelectScreen(
+private fun LanguageSelectScreenContent(
     prefs: ILocalPreferencesStorage?
 ) {
+    val navigator = LocalNavigator.currentOrThrow
+
     val initialLangCode =
         prefs?.getString(Preference.LANGUAGE_KEY, LocalizationUtils.AR) ?: LocalizationUtils.AR
     val (selectedOption, onOptionSelected) = remember {
@@ -47,10 +63,7 @@ fun LanguageSelectScreen(
         val code = LocalizationUtils.code(selectedOption)
         prefs?.putString(Preference.LANGUAGE_KEY, code)
 
-        context.findActivity()?.finish()
-        context.findActivity()?.intent?.let {
-            context.findActivity()?.startActivity(it)
-        }
+        Localization.setLocale(code)
     }
 
     ScreenPage(
@@ -103,16 +116,8 @@ fun LanguageSelectScreen(
                 text = stringResource(Res.string.save)
             ) {
                 prefs?.putBoolean(Preference.FIRST_TIME_LAUNCH, false)
-                navController.navigate(MainScreens.Home)
+                //navigator.push(HomeScreen())
             }
         }
     }
-}
-
-@Preview(showSystemUi = false, showBackground = true, locale = "ar")
-@Composable
-fun PreviewLanguageSelectScreen() {
-    LanguageSelectScreen(
-        prefs = null
-    )
 }
