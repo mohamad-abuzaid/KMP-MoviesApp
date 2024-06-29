@@ -23,6 +23,13 @@
     <string name="language_subtitle_ar" translatable="false">برجاء تحديد اللغة المطلوبة</string>
     <string name="language_subtitle_en" translatable="false">Please select your language</string>
 
+    <!--  HOME-->
+    <string name="search_title">Search for content</string>
+    <string name="categories_title">Categories</string>
+    <string name="popular_title">Popular</string>
+    <string name="movies">Movies</string>
+    <string name="shows">Shows</string>
+
     <!--    RESPONSE SUCCESS-->
     <string name="login_success">Login Success</string>
 

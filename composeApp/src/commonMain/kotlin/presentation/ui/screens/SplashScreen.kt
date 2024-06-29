@@ -14,7 +14,6 @@ import kmp_movies.composeapp.generated.resources.Res
 import kmp_movies.composeapp.generated.resources.splash_background
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.mp.KoinPlatform
 import presentation.storage.ILocalPreferencesStorage
 import presentation.storage.Preference
@@ -52,14 +51,7 @@ fun SplashScreenContent(prefs: ILocalPreferencesStorage?) {
         if (firstTime) {
             navigator.push(LanguageSelectScreen())
         } else {
-            //navigator.push(HomeScreen())
+            navigator.push(HomeScreen())
         }
     }
-}
-
-
-@Preview
-@Composable
-fun PreviewSplashScreen() {
-    SplashScreenContent(prefs = null)
 }

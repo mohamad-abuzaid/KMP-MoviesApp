@@ -116,7 +116,7 @@ private fun LanguageSelectScreenContent(
                 text = stringResource(Res.string.save)
             ) {
                 prefs?.putBoolean(Preference.FIRST_TIME_LAUNCH, false)
-                //navigator.push(HomeScreen())
+                navigator.push(HomeScreen())
             }
         }
     }

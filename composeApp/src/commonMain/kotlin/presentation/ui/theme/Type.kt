@@ -22,12 +22,46 @@ fun getTypography(): Typography {
     )
 
     return Typography(
-        bodyLarge = TextStyle(
+        displayLarge = TextStyle(
+            fontFamily = axiforma,
+            fontWeight = FontWeight.Bold,
+            fontSize = 32.sp
+        ),
+
+        displayMedium = TextStyle(
             fontFamily = axiforma,
             fontWeight = FontWeight.Normal,
-            fontSize = 16.sp,
-            lineHeight = 24.sp,
-            letterSpacing = 0.5.sp
+            fontSize = 24.sp
+        ),
+
+        titleLarge = TextStyle(
+            fontFamily = axiforma,
+            fontWeight = FontWeight.Bold,
+            fontSize = 18.sp
+        ),
+
+        titleMedium = TextStyle(
+            fontFamily = axiforma,
+            fontWeight = FontWeight.Normal,
+            fontSize = 18.sp
+        ),
+
+        titleSmall = TextStyle(
+            fontFamily = axiforma,
+            fontWeight = FontWeight.Normal,
+            fontSize = 16.sp
+        ),
+
+        labelLarge = TextStyle(
+            fontFamily = axiforma,
+            fontWeight = FontWeight.Bold,
+            fontSize = 14.sp
+        ),
+
+        labelMedium = TextStyle(
+            fontFamily = axiforma,
+            fontWeight = FontWeight.Normal,
+            fontSize = 14.sp
         )
     )
 }

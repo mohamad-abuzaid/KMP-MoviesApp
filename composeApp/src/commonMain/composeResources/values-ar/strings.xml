@@ -21,6 +21,13 @@
     <!--  LANGUAGE-->
     <string name="language_title">لغة التطبيق</string>
 
+    <!--  HOME-->
+    <string name="search_title">ابحث عن محتوى</string>
+    <string name="categories_title">الأقسام</string>
+    <string name="popular_title">الرائج</string>
+    <string name="movies">أفلام</string>
+    <string name="shows">مسلسلات</string>
+
     <!--    RESPONSE SUCCESS-->
     <string name="login_success">تم تسجيل الدخول بنجاح</string>
 
