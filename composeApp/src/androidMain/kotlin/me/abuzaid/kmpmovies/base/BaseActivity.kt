@@ -13,7 +13,7 @@ import java.util.Locale
  * Email: m.abuzaid.ali@gmail.com
  */
 open class BaseActivity : ComponentActivity() {
-    private val prefs: ILocalPreferencesStorage by inject()
+    val prefs: ILocalPreferencesStorage by inject()
 
     override fun attachBaseContext(baseContext: Context) {
         val lang = prefs.getString(Preference.LANGUAGE_KEY, LocalizationUtils.AR)
