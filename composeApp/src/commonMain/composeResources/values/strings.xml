@@ -18,6 +18,11 @@
     <string name="unknown">Unknown</string>
     <string name="ok">OK</string>
 
+    <!--  LANGUAGE-->
+    <string name="language_title">App Language</string>
+    <string name="language_subtitle_ar" translatable="false">برجاء تحديد اللغة المطلوبة</string>
+    <string name="language_subtitle_en" translatable="false">Please select your language</string>
+
     <!--    RESPONSE SUCCESS-->
     <string name="login_success">Login Success</string>
 
