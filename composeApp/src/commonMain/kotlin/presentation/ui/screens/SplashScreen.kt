@@ -16,7 +16,6 @@ import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.painterResource
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import org.koin.mp.KoinPlatform
 import presentation.storage.ILocalPreferencesStorage
 import presentation.storage.Preference
 
