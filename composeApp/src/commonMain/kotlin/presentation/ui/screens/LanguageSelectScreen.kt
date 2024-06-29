@@ -27,7 +27,6 @@ import kmp_movies.composeapp.generated.resources.save
 import org.jetbrains.compose.resources.stringResource
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import org.koin.mp.KoinPlatform
 import presentation.localization.Localization
 import presentation.localization.LocalizationUtils
 import presentation.storage.ILocalPreferencesStorage
@@ -40,17 +39,9 @@ import presentation.ui.composables.pages.ScreenPage
  * Created by "Mohamad Abuzaid" on 01/06/2024.
  * Email: m.abuzaid.ali@gmail.com
  */
-class LanguageSelectScreen : Screen, KoinComponent {
-    @Composable
-    override fun Content() {
-        val prefs: ILocalPreferencesStorage? by inject()
-
-        LanguageSelectScreenContent(prefs)
-    }
-}
-
 @Composable
-private fun LanguageSelectScreenContent(
+fun LanguageSelectScreenContent(
+    context: Any?,
     prefs: ILocalPreferencesStorage?
 ) {
     val navigator = LocalNavigator.currentOrThrow
@@ -65,7 +56,7 @@ private fun LanguageSelectScreenContent(
         val code = LocalizationUtils.code(selectedOption)
         prefs?.putString(Preference.LANGUAGE_KEY, code)
 
-        Localization.setLocale(code)
+        Localization.setLocale(context, code)
     }
 
     ScreenPage(

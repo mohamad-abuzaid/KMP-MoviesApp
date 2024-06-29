@@ -20,6 +20,7 @@ import org.koin.core.component.inject
 import org.koin.mp.KoinPlatform
 import presentation.storage.ILocalPreferencesStorage
 import presentation.storage.Preference
+import presentation.ui.screens.platform_composables.LanguageSelectScreen
 
 /**
  * Created by "Mohamad Abuzaid" on 01/06/2024.
