@@ -25,7 +25,8 @@ import kmp_movies.composeapp.generated.resources.language_subtitle_en
 import kmp_movies.composeapp.generated.resources.language_title
 import kmp_movies.composeapp.generated.resources.save
 import org.jetbrains.compose.resources.stringResource
-import org.koin.mp.KoinPlatform
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import presentation.localization.Localization
 import presentation.localization.LocalizationUtils
 import presentation.storage.ILocalPreferencesStorage
@@ -38,10 +39,10 @@ import presentation.ui.composables.pages.ScreenPage
  * Created by "Mohamad Abuzaid" on 01/06/2024.
  * Email: m.abuzaid.ali@gmail.com
  */
-class LanguageSelectScreen : Screen {
+class LanguageSelectScreen : Screen, KoinComponent {
     @Composable
     override fun Content() {
-        val prefs: ILocalPreferencesStorage? = KoinPlatform.getKoin().getOrNull()
+        val prefs: ILocalPreferencesStorage? by inject()
 
         LanguageSelectScreenContent(prefs)
     }

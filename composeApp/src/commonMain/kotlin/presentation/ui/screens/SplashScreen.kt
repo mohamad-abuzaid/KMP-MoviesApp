@@ -14,6 +14,8 @@ import kmp_movies.composeapp.generated.resources.Res
 import kmp_movies.composeapp.generated.resources.splash_background
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.painterResource
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.koin.mp.KoinPlatform
 import presentation.storage.ILocalPreferencesStorage
 import presentation.storage.Preference
@@ -22,10 +24,10 @@ import presentation.storage.Preference
  * Created by "Mohamad Abuzaid" on 01/06/2024.
  * Email: m.abuzaid.ali@gmail.com
  */
-class SplashScreen : Screen {
+class SplashScreen : Screen, KoinComponent {
     @Composable
     override fun Content() {
-        val prefs: ILocalPreferencesStorage? = KoinPlatform.getKoin().getOrNull()
+        val prefs: ILocalPreferencesStorage? by inject()
 
         SplashScreenContent(prefs)
     }
