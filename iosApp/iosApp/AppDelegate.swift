@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import UIKit
+import ComposeApp
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

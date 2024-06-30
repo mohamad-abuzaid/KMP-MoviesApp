@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 @objc class LocalizationHelper: NSObject {
     @objc class func setLocale(locale: String) {

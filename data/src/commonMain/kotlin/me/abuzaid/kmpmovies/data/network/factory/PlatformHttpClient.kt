@@ -27,6 +27,7 @@ import kotlinx.serialization.json.Json
  * Created by "Mohamad Abuzaid" on 27/06/2024.
  * Email: m.abuzaid.ali@gmail.com
  */
+@Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 expect class PlatformHttpClient() {
     fun create(baseUrl: String, token: String): HttpClient
 }
