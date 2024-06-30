@@ -16,7 +16,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import kmp_movies.composeapp.generated.resources.Res
@@ -25,8 +24,6 @@ import kmp_movies.composeapp.generated.resources.language_subtitle_en
 import kmp_movies.composeapp.generated.resources.language_title
 import kmp_movies.composeapp.generated.resources.save
 import org.jetbrains.compose.resources.stringResource
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import presentation.localization.Localization
 import presentation.localization.LocalizationUtils
 import presentation.storage.ILocalPreferencesStorage

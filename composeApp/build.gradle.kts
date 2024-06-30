@@ -1,7 +1,9 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -11,6 +13,7 @@ plugins {
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.ksp)
     id("kotlin-parcelize")
+    //id("io.github.ttypic.swiftklib") version "0.5.1"
 }
 
 android {
@@ -57,7 +60,7 @@ android {
 }
 
 kotlin {
-    androidTarget()
+    androidTarget ()
     jvm("desktop")
 
     @OptIn(ExperimentalWasmDsl::class)
@@ -81,9 +84,17 @@ kotlin {
         iosX64(),
         iosArm64(),
         iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            baseName = "ComposeApp"
+    ).forEach {
+//        it.compilations {
+//            val main by getting {
+//                cinterops {
+//                    create("KMovies")
+//                }
+//            }
+//        }
+
+        it.binaries.framework {
+            baseName = "composeApp"
             isStatic = true
         }
     }
@@ -151,6 +162,12 @@ kotlin {
     }
 
     task("testClasses")
+    tasks.withType<KotlinJvmCompile>().configureEach {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+            freeCompilerArgs.add("-opt-in=kotlin.RequiresOptIn")
+        }
+    }
 }
 
 compose.desktop {
@@ -173,3 +190,10 @@ dependencies {
     debugImplementation(libs.compose.ui.tooling)
     debugImplementation(libs.compose.ui.test.manifest)
 }
+
+//swiftklib {
+//    create("KMovies") {
+//        path = file("native/kmovies")
+//        packageName("me.abuzaid.objclibs.kmovies")
+//    }
+//}
