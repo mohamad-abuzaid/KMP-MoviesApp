@@ -6,6 +6,6 @@ fun debugBuild() {
     Napier.base(DebugAntilog("Napier_iOS"))
 }
 
-fun releaseBuild(antilog: Antilog) {
-    Napier.base(antilog)
+fun releaseBuild(antiLog: Antilog) {
+    Napier.base(antiLog)
 }
