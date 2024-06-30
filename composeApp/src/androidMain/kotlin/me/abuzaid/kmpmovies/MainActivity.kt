@@ -6,8 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import org.koin.android.ext.android.inject
 import presentation.App
 import presentation.storage.ILocalPreferencesStorage
@@ -23,8 +21,6 @@ class MainActivity : ComponentActivity() {
         val lang = prefs.getString(Preference.LANGUAGE_KEY, "ar")
 
         setContent {
-            navController = rememberNavController()
-
             CompositionLocalProvider(
                 LocalLang provides lang
             ) {
