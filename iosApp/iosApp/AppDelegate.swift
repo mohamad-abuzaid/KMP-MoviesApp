@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import UIKit
+import ComposeApp
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,7 +19,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        Napier.base(DebugAntilog("Napier_iOS"))
+        #if DEBUG
+        NapierProxyKt.debugBuild()
+        #endif
+
         return true
     }
 }
