@@ -30,7 +30,7 @@ android {
 }
 
 kotlin {
-    androidTarget ()
+    androidTarget()
     jvm("desktop")
 
     @OptIn(ExperimentalWasmDsl::class)
