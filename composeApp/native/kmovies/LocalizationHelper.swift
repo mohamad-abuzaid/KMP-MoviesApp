@@ -7,10 +7,13 @@
 //
 
 import Foundation
-import UIKit
+import SwiftUI
 
-@objc class LocalizationHelper: NSObject {
-    @objc(setLocale:) class func setLocale(locale: String) {
+@objc
+public class LocalizationHelper: NSObject {
+
+    @objc(setLocale:)
+    public func setLocale(locale: String) {
         UserDefaults.standard.set([locale], forKey: "AppleLanguages")
         UserDefaults.standard.synchronize()
 

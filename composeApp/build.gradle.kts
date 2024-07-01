@@ -12,8 +12,7 @@ plugins {
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.ksp)
-    id("kotlin-parcelize")
-    //id("io.github.ttypic.swiftklib") version "0.5.1"
+    alias(libs.plugins.klib)
 }
 
 android {
@@ -60,7 +59,7 @@ android {
 }
 
 kotlin {
-    androidTarget ()
+    androidTarget()
     jvm("desktop")
 
     @OptIn(ExperimentalWasmDsl::class)
@@ -85,16 +84,16 @@ kotlin {
         iosArm64(),
         iosSimulatorArm64()
     ).forEach {
-//        it.compilations {
-//            val main by getting {
-//                cinterops {
-//                    create("KMovies")
-//                }
-//            }
-//        }
+        it.compilations {
+            val main by getting {
+                cinterops {
+                    create("kmovies")
+                }
+            }
+        }
 
         it.binaries.framework {
-            baseName = "composeApp"
+            baseName = "ComposeApp"
             isStatic = true
         }
     }
@@ -191,9 +190,9 @@ dependencies {
     debugImplementation(libs.compose.ui.test.manifest)
 }
 
-//swiftklib {
-//    create("KMovies") {
-//        path = file("native/kmovies")
-//        packageName("me.abuzaid.objclibs.kmovies")
-//    }
-//}
+swiftklib {
+    create("kmovies") {
+        path = file("native/kmovies")
+        packageName("me.abuzaid.kmovies")
+    }
+}
