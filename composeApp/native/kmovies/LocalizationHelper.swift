@@ -7,21 +7,18 @@
 //
 
 import Foundation
-import SwiftUI
 
-@objc
-public class LocalizationHelper: NSObject {
+@objc public class LocalizationHelper: NSObject {
 
-    @objc(setLocale:)
-    public func setLocale(locale: String) {
-        UserDefaults.standard.set([locale], forKey: "AppleLanguages")
-        UserDefaults.standard.synchronize()
-
-        // Reload the root view controller to apply the new language
-        if let window = UIApplication.shared.keyWindow {
-            let rootViewController = window.rootViewController
-            window.rootViewController = nil
-            window.rootViewController = rootViewController
-        }
+    @objc(setLocale:) public func setLocale(locale: String) {
+//        UserDefaults.standard.set([locale], forKey: "AppleLanguages")
+//        UserDefaults.standard.synchronize()
+//
+//         Reload the root view controller to apply the new language
+//        if let window = UIApplication.shared.keyWindow {
+//            let rootViewController = window.rootViewController
+//            window.rootViewController = nil
+//            window.rootViewController = rootViewController
+//        }
     }
 }

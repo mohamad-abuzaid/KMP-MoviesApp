@@ -64,7 +64,7 @@ kotlin {
 
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        moduleName = "composeApp"
+        moduleName = "ComposeApp"
         browser {
             commonWebpackConfig {
                 outputFileName = "composeApp.js"
