@@ -1,6 +1,7 @@
 package di
 
 import org.koin.core.context.startKoin
+import org.koin.core.module.Module
 import org.koin.dsl.KoinAppDeclaration
 
 /**
@@ -8,10 +9,14 @@ import org.koin.dsl.KoinAppDeclaration
  * Email: m.abuzaid.ali@gmail.com
  */
 fun initKoin(
+    additionalModules: List<Module> = listOf(),
     appDeclaration: KoinAppDeclaration = {},
 ) {
     startKoin {
         appDeclaration()
-        modules(appModules())
+        modules(
+            appModules() +
+                    additionalModules
+        )
     }.koin
 }

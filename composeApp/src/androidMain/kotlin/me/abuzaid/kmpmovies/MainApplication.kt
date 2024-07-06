@@ -1,6 +1,7 @@
 package me.abuzaid.kmpmovies
 
 import android.app.Application
+import di.AndroidApplicationComponent
 import di.initKoinAndroid
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
@@ -16,7 +17,9 @@ class MainApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        initKoinAndroid {
+        initKoinAndroid(
+            appComponent = AndroidApplicationComponent()
+        ) {
             // Log Koin into Android logger
             androidLogger()
 
