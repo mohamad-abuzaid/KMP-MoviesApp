@@ -3,9 +3,13 @@ import ComposeApp
 
 @main
 struct iOSApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
     init() {
         KoinInit_iosKt.doInitKoinIos(
-            appComponent: IosApplicationComponent()
+            appComponent: IosApplicationComponent(
+                localManager: LocalizationHelper()
+            )
         )
     }
 

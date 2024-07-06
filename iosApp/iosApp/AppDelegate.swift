@@ -10,7 +10,6 @@ import Foundation
 import SwiftUI
 import ComposeApp
 
-@UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
@@ -23,6 +22,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NapierProxyKt.debugBuild()
         #endif
 
+        let commonAppDelegate = CommonAppDelegateImpl()
+        commonAppDelegate.onCreate()
+        
         return true
+    }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        let commonAppDelegate = CommonAppDelegateImpl()
+        commonAppDelegate.onTerminate()
     }
 }
