@@ -1,6 +1,7 @@
 package presentation.localization
 
-import me.abuzaid.kmovies.LocalizationHelper
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 /**
  * Created by "Mohamad Abuzaid" on 28/06/2024.
@@ -8,8 +9,9 @@ import me.abuzaid.kmovies.LocalizationHelper
  */
 @OptIn(kotlinx.cinterop.ExperimentalForeignApi::class)
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
-actual object Localization {
+actual object Localization : KoinComponent {
     actual fun setLocale(context: Any?, locale: String) {
-        LocalizationHelper.setLocale(locale)
+        val localManager: ILocal by inject<ILocal>()
+        localManager.setLocale(locale)
     }
 }

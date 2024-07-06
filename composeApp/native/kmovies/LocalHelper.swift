@@ -1,5 +1,5 @@
 //
-//  LocalizationHelper.swift
+//  LocalHelper.swift
 //  iosApp
 //
 //  Created by Mohamad Abuzaid on 28/06/2024.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-@objc public class LocalizationHelper: NSObject {
+@objc public class LocalHelper: NSObject {
 
     @objc(setLocale:) public func setLocale(locale: String) {
 //        UserDefaults.standard.set([locale], forKey: "AppleLanguages")
