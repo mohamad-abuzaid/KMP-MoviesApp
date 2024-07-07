@@ -80,6 +80,24 @@ kotlin {
 
             api(libs.koin.android)
             api(libs.koin.compose)
+
+            api(libs.ktor.client.okhttp)
+        }
+
+        iosMain.dependencies {
+            api(libs.ktor.client.darwin)
+        }
+
+        val desktopMain by getting {
+            dependencies {
+                api(libs.ktor.client.okhttp)
+            }
+        }
+
+        val wasmJsMain by getting {
+            dependencies {
+                api(libs.ktor.client.js)
+            }
         }
     }
 

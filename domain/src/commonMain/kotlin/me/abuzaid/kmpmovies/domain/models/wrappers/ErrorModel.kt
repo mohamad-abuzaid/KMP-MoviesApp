@@ -7,6 +7,5 @@ package me.abuzaid.kmpmovies.domain.models.wrappers
 
 data class ErrorModel(
     val code: Int,
-    val errorMessage: String,
-    val errorDetails: String,
+    val errorMessage: String
 )

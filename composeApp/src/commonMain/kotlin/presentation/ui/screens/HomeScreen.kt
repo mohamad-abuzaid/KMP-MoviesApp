@@ -1,6 +1,8 @@
 package presentation.ui.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,13 +22,17 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import io.ktor.http.encodeURLParameter
 import kmp_movies.composeapp.generated.resources.Res
@@ -39,26 +45,55 @@ import kmp_movies.composeapp.generated.resources.search_title
 import kmp_movies.composeapp.generated.resources.shows
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
+import presentation.localization.LocalizationUtils
 import presentation.ui.composables.MovieItem
 import presentation.ui.composables.inputfields.InputTextField
+import presentation.ui.composables.loaders.ErrorView
+import presentation.ui.composables.loaders.LoadingIndicatorRotating
+import presentation.ui.composables.loaders.NoContentView
 import presentation.ui.composables.pages.ScreenPage
-import presentation.ui.utils.Dummy
+import presentation.ui.utils.LocalLang
+import presentation.viewmodels.MoviesEvents
+import presentation.viewmodels.MoviesScreenModel
+import presentation.viewmodels.PopularState
 
 /**
  * Created by "Mohamad Abuzaid" on 01/06/2024.
  * Email: m.abuzaid.ali@gmail.com
  */
-class HomeScreen : Screen {
+class HomeScreen : Screen, KoinComponent {
     @Composable
     override fun Content() {
-        HomeScreenContent()
+        val navigator = LocalNavigator.currentOrThrow
+        val screenModel = navigator.rememberNavigatorScreenModel { get<MoviesScreenModel>() }
+        val state = screenModel.popularState
+        val event = screenModel::onEvent
+
+        HomeScreenContent(navigator, state, event)
     }
 }
 
 @Composable
-private fun HomeScreenContent() {
+private fun HomeScreenContent(
+    navigator: Navigator,
+    state: PopularState,
+    fireEvent: (MoviesEvents) -> Unit
+) {
+    val lang = LocalLang.current
     val searchQuery = remember { mutableStateOf("") }
-    val navigator = LocalNavigator.currentOrThrow
+
+    /*****************************/
+
+    LaunchedEffect(key1 = state) {
+        if (state.success == null) {
+            fireEvent(
+                MoviesEvents.FetchPopular(LocalizationUtils.fullLocal(lang))
+            )
+        }
+    }
+    /*****************************/
 
     ScreenPage(
         pullRefreshEnabled = true,
@@ -139,22 +174,53 @@ private fun HomeScreenContent() {
                 color = MaterialTheme.colorScheme.primary
             )
 
-            val items = Dummy.movies
+            with(state) {
+                this.success?.let { movies ->
+                    if (movies.isNotEmpty()) {
+                        LazyVerticalGrid(
+                            modifier = Modifier.fillMaxSize(),
+                            columns = GridCells.Fixed(3),
+                            contentPadding = PaddingValues(10.dp),
+                            verticalArrangement = Arrangement.spacedBy(10.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            items(movies) { movie ->
+                                MovieItem(
+                                    movieItem = movie
+                                ) {
+                                    navigator.push(
+                                        MovieDetailsScreen(
+                                            movie.copy(
+                                                backdropPath = movie.backdropPath.encodeURLParameter(),
+                                                posterPath = movie.posterPath.encodeURLParameter()
+                                            )
+                                        )
+                                    )
+                                }
+                            }
+                        }
+                    } else {
+                        NoContentView()
+                    }
+                }
 
-            LazyVerticalGrid(
-                modifier = Modifier.fillMaxSize(),
-                columns = GridCells.Fixed(3),
-                contentPadding = PaddingValues(10.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                items(items) { movie ->
-                    MovieItem(movieItem = movie) {
-                        navigator.push(
-                            MovieDetailsScreen(
-                                movie.copy(posterPath = movie.posterPath.encodeURLParameter())
-                            )
+                this.error?.let { error ->
+                    ErrorView(errorText = error) {
+                        fireEvent(
+                            MoviesEvents.FetchPopular(LocalizationUtils.fullLocal(lang))
                         )
+                    }
+                }
+
+                if (this.loading) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(color = Color.Unspecified)
+                            .clickable { },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        LoadingIndicatorRotating(false)
                     }
                 }
             }

@@ -2,7 +2,6 @@ package presentation.localization
 
 import android.content.Context
 import android.content.Intent
-import org.koin.core.component.KoinComponent
 import presentation.ui.utils.findActivity
 
 /**
@@ -10,7 +9,7 @@ import presentation.ui.utils.findActivity
  * Email: m.abuzaid.ali@gmail.com
  */
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
-actual object Localization : KoinComponent {
+actual object Localization {
     actual fun setLocale(context: Any?, locale: String) {
         val activity = (context as Context).findActivity()
         activity?.let {

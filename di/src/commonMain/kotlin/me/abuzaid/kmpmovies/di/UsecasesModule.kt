@@ -1,5 +1,7 @@
 package me.abuzaid.kmpmovies.di
 
+import me.abuzaid.movies.domain.usecases.MoviesUseCases
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 /**
@@ -7,11 +9,10 @@ import org.koin.dsl.module
  * Email: m.abuzaid.ali@gmail.com
  */
 val useCasesModule = module {
-
-//    factory {
-//        FetchMoviesUseCase(
-//            newsRepository = get(),
-//            dispatcher = get(named("defaultDispatcher"))
-//        )
-//    }
+    factory {
+        MoviesUseCases(
+            moviesRepository = get(),
+            dispatcher = get(named("defaultDispatcher"))
+        )
+    }
 }

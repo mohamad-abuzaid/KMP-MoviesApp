@@ -63,9 +63,9 @@ buildkonfig {
     // exposeObjectWithName = "YourAwesomePublicConfig"
 
     defaultConfigs {
-        buildConfigField(STRING, "BASE_URL", "\"${config.commonProperties["base_url"]}\"")
-        buildConfigField(STRING, "API_KEY", "\"${config.commonProperties["api"]}\"")
-        buildConfigField(STRING, "TOKEN", "\"${config.commonProperties["token"]}\"")
+        buildConfigField(STRING, "BASE_URL", "${config.commonProperties["base_url"]}")
+        buildConfigField(STRING, "API_KEY", "${config.commonProperties["api"]}")
+        buildConfigField(STRING, "TOKEN", "${config.commonProperties["token"]}")
     }
 }
 
@@ -111,23 +111,6 @@ kotlin {
 
         androidMain.dependencies {
             implementation(libs.ktor.client.android)
-            implementation(libs.ktor.client.okhttp)
-        }
-
-        iosMain.dependencies {
-            implementation(libs.ktor.client.darwin)
-        }
-
-        val desktopMain by getting {
-            dependencies {
-                implementation(libs.ktor.client.okhttp)
-            }
-        }
-
-        val wasmJsMain by getting {
-            dependencies {
-                implementation(libs.ktor.client.js)
-            }
         }
     }
 

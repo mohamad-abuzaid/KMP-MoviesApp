@@ -27,7 +27,12 @@ import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import coil3.ImageLoader
+import coil3.compose.LocalPlatformContext
 import coil3.compose.SubcomposeAsyncImage
+import coil3.request.CachePolicy
+import coil3.request.ImageRequest
+import coil3.util.DebugLogger
 import io.ktor.http.decodeURLPart
 import kmp_movies.composeapp.generated.resources.Res
 import kmp_movies.composeapp.generated.resources.image_placeholder
@@ -36,10 +41,14 @@ import kmp_movies.composeapp.generated.resources.watch_now
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.core.qualifier.named
+import org.koin.mp.KoinPlatform
 import presentation.models.MovieDisplay
 import presentation.ui.composables.ActorItem
 import presentation.ui.composables.RatingStars
 import presentation.ui.composables.buttons.MainRoundedButton
+import presentation.ui.composables.coil.createCustomHttpClient
+import presentation.ui.composables.coil.createCustomImageLoader
 import presentation.ui.composables.pages.ScreenPage
 import presentation.ui.utils.Dummy
 
@@ -71,12 +80,21 @@ fun MovieDetailsScreenContent(
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.Top
         ) {
+            val token = KoinPlatform.getKoin().get<String>(named("accessToken"))
+            val imageLoader = createCustomImageLoader(
+                LocalPlatformContext.current,
+                createCustomHttpClient(token)
+            )
+
             SubcomposeAsyncImage(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(400.dp),
-                model = movie.posterPath.decodeURLPart(),
+                model = ImageRequest.Builder(LocalPlatformContext.current)
+                    .data("https://image.tmdb.org/t/p/original${movie.posterPath}")
+                    .build(),
                 contentScale = ContentScale.FillBounds,
+                imageLoader = imageLoader,
                 loading = { CircularProgressIndicator() },
                 error = {
                     Image(

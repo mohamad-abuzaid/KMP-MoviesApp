@@ -1,6 +1,7 @@
 package di
 
 import org.koin.dsl.module
+import presentation.viewmodels.MoviesScreenModel
 
 /**
  * Created by "Mohamad Abuzaid" on 25/05/2024.
@@ -8,5 +9,5 @@ import org.koin.dsl.module
  */
 
 val viewModelsModule = module {
-//    viewModelOf(::HomeViewModel)
+    factory { MoviesScreenModel(get()) }
 }
