@@ -8,7 +8,7 @@ import java.util.Locale
  */
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 actual object Localization {
-     actual fun setLocale(locale: String) {
+     actual fun setLocale(context: Any?, locale: String) {
          val newLocale = Locale(locale)
          Locale.setDefault(newLocale)
         // You may need to reload resources or refresh UI if needed

@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import SwiftUI
+import ComposeApp
 
-@UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
@@ -17,7 +18,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        Napier.base(DebugAntilog("Napier_iOS"))
+        #if DEBUG
+        NapierProxyKt.debugBuild()
+        #endif
+
+        let commonAppDelegate = CommonAppDelegateImpl()
+        commonAppDelegate.onCreate()
+        
         return true
+    }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        let commonAppDelegate = CommonAppDelegateImpl()
+        commonAppDelegate.onTerminate()
     }
 }

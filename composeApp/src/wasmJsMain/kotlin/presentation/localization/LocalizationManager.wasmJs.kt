@@ -9,7 +9,7 @@ external fun setLanguage(language: String)
 
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 actual object Localization {
-    actual fun setLocale(locale: String) {
+    actual fun setLocale(context: Any?, locale: String) {
         // Implement JavaScript interop to change locale
         setLanguage(locale)
     }

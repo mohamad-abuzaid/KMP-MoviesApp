@@ -13,7 +13,6 @@ voyager = "1.1.0-beta02"
 coil = "3.0.0-alpha06"
 junit = "4.13.2"
 kotlin = "2.0.0"
-kotlin_android = "1.9.24"
 ksp = "2.0.0-1.0.21"
 
 coroutines = "1.8.1"
@@ -88,7 +87,6 @@ junit-test = { module = "junit:junit", version.ref = "junit" }
 
 [plugins]
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
-kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin_android" }
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }

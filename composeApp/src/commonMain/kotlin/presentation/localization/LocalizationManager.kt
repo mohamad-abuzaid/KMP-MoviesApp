@@ -6,5 +6,5 @@ package presentation.localization
  */
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 expect object Localization {
-    fun setLocale(locale: String)
+    fun setLocale(context: Any?, locale: String)
 }
