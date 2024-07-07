@@ -112,7 +112,7 @@ kotlin {
             implementation(libs.coil.mp)
             implementation(libs.coil.compose.core)
             implementation(libs.coil.compose)
-            //implementation(libs.coil.ktor)
+            implementation(libs.coil.ktor)
 
             implementation(libs.russhwolf)
         }
