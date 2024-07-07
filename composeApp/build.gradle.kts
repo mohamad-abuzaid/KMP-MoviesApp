@@ -1,6 +1,5 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
@@ -12,7 +11,6 @@ plugins {
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.klib)
 }
 
 android {
@@ -84,25 +82,9 @@ kotlin {
         iosArm64(),
         iosSimulatorArm64()
     ).forEach {
-        it.compilations {
-            val main by getting {
-                cinterops {
-                    create("kmovies")
-                }
-            }
-        }
-
         it.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
-        }
-    }
-
-    targets.withType<KotlinNativeTarget> {
-        binaries {
-            all {
-                linkerOpts("-lsqlite3")
-            }
         }
     }
 
@@ -188,11 +170,4 @@ compose.desktop {
 dependencies {
     debugImplementation(libs.compose.ui.tooling)
     debugImplementation(libs.compose.ui.test.manifest)
-}
-
-swiftklib {
-    create("kmovies") {
-        path = file("native/kmovies")
-        packageName("me.abuzaid.kmovies")
-    }
 }

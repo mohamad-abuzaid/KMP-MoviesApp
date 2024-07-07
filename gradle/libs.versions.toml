@@ -14,7 +14,6 @@ coil = "3.0.0-alpha06"
 junit = "4.13.2"
 kotlin = "2.0.0"
 ksp = "2.0.0-1.0.21"
-klib = "0.5.1"
 
 coroutines = "1.8.1"
 koin = "3.6.0-wasm-alpha2"
@@ -94,5 +93,4 @@ jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-klib = { id = "io.github.ttypic.swiftklib", version.ref = "klib" }
 room = { id = "androidx.room", version.ref = "room" }
