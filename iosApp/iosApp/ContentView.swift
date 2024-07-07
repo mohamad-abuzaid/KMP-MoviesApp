@@ -1,4 +1,3 @@
-import UIKit
 import SwiftUI
 import ComposeApp
 
@@ -17,5 +16,8 @@ struct ContentView: View {
     }
 }
 
-
-
+struct ComposeView_Previews: PreviewProvider {
+    static var previews: some View {
+        ComposeView()
+    }
+}

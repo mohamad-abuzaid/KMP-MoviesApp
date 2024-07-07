@@ -1,28 +1,55 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.ksp)
 }
 
 android {
     namespace = "me.abuzaid.kmpmovies.domain"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
+
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
+
+    kotlin{ jvmToolchain{ this.languageVersion.set(JavaLanguageVersion.of("17")) } }
 }
 
 kotlin {
-    androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "11"
+    androidTarget()
+    jvm("desktop")
+
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        moduleName = "domain"
+        browser {
+            commonWebpackConfig {
+                outputFileName = "composeApp.js"
+                devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
+                    static = (static ?: mutableListOf()).apply {
+                        // Serve sources to debug inside browser
+                        add(project.projectDir.path)
+                    }
+                }
             }
         }
+        binaries.executable()
     }
 
     listOf(
@@ -35,37 +62,50 @@ kotlin {
             isStatic = true
         }
     }
-    jvm("desktop")
 
     sourceSets {
-        val commonMain by getting {
+        commonMain.dependencies {
+            api(libs.coroutines.core)
+            api(libs.koin.core)
+
+            api(libs.ktor.client.core)
+            api(libs.ktor.client.serialization)
+
+            api(libs.napier)
+        }
+
+        androidMain.dependencies {
+            api(libs.coroutines.android)
+            api(libs.paging.common)
+
+            api(libs.koin.android)
+            api(libs.koin.compose)
+
+            api(libs.ktor.client.okhttp)
+        }
+
+        iosMain.dependencies {
+            api(libs.ktor.client.darwin)
+        }
+
+        val desktopMain by getting {
             dependencies {
-                api(libs.coroutines.core)
-                api(libs.koin.core)
+                api(libs.ktor.client.okhttp)
             }
         }
 
-        val androidMain by getting {
+        val wasmJsMain by getting {
             dependencies {
-                api(libs.coroutines.android)
-
-                api(libs.koin.android)
-                api(libs.koin.compose)
-            }
-        }
-
-        val commonTest by getting {
-            dependencies {
-                api(libs.kotlin.test)
-                api(libs.coroutines.test)
+                api(libs.ktor.client.js)
             }
         }
     }
-}
 
-dependencies {
-    api(libs.moshi.core)
-    api(libs.moshi.kotlin)
-    api(libs.moshi.adapters)
-    ksp(libs.moshi.codegen)
+    task("testClasses")
+    tasks.withType<KotlinJvmCompile>().configureEach {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+            freeCompilerArgs.add("-opt-in=kotlin.RequiresOptIn")
+        }
+    }
 }

@@ -1,3 +1,8 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
@@ -7,22 +12,38 @@ plugins {
 android {
     namespace = "me.abuzaid.kmpmovies.di"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
+
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
     }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
+
+    kotlin{ jvmToolchain{ this.languageVersion.set(JavaLanguageVersion.of("17")) } }
 }
 
 kotlin {
-    androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "11"
+    androidTarget()
+    jvm("desktop")
+
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        moduleName = "di"
+        browser {
+            commonWebpackConfig {
+                outputFileName = "composeApp.js"
+                devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
+                    static = (static ?: mutableListOf()).apply {
+                        // Serve sources to debug inside browser
+                        add(project.projectDir.path)
+                    }
+                }
             }
         }
+        binaries.executable()
     }
 
     listOf(
@@ -35,23 +56,18 @@ kotlin {
             isStatic = true
         }
     }
-    jvm("desktop")
 
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(project(":data"))
-            }
+        commonMain.dependencies {
+            implementation(project(":data"))
         }
+    }
 
-        val androidMain by getting {
-            dependencies {
-            }
-        }
-
-        val commonTest by getting {
-            dependencies {
-            }
+    task("testClasses")
+    tasks.withType<KotlinJvmCompile>().configureEach {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+            freeCompilerArgs.add("-opt-in=kotlin.RequiresOptIn")
         }
     }
 }
