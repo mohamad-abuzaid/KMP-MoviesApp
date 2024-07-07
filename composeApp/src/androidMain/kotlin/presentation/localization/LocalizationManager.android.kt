@@ -3,7 +3,6 @@ package presentation.localization
 import android.content.Context
 import android.content.Intent
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import presentation.ui.utils.findActivity
 
 /**
@@ -12,15 +11,8 @@ import presentation.ui.utils.findActivity
  */
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 actual object Localization : KoinComponent {
-    actual fun setLocale(locale: String) {
-        val context: Context by inject()
-
-//        context.findActivity()?.finish()
-//        context.findActivity()?.intent?.let {
-//            context.findActivity()?.startActivity(it)
-//        }
-
-        val activity = context.findActivity()
+    actual fun setLocale(context: Any?, locale: String) {
+        val activity = (context as Context).findActivity()
         activity?.let {
             val intent = Intent(it, it::class.java)
             it.finish()
