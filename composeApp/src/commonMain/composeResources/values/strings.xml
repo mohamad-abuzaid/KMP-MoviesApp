@@ -30,6 +30,10 @@
     <string name="movies">Movies</string>
     <string name="shows">Shows</string>
 
+    <!--  MOVIE DETAILS-->
+    <string name="votes_number">from %d users</string>
+    <string name="watch_now">Watch Now</string>
+
     <!--    RESPONSE SUCCESS-->
     <string name="login_success">Login Success</string>
 

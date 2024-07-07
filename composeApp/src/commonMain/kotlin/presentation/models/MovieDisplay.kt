@@ -1,9 +1,12 @@
 package presentation.models
 
+import kotlinx.serialization.Serializable
+
 /**
  * Created by "Mohamad Abuzaid" on 05/06/2024.
  * Email: mabuzaid@sure.com.sa
  */
+@Serializable
 data class MovieDisplay(
     val id: Int,
     val adult: Boolean,

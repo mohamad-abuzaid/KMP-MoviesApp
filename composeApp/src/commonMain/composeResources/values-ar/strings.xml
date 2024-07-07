@@ -28,6 +28,10 @@
     <string name="movies">أفلام</string>
     <string name="shows">مسلسلات</string>
 
+    <!--  MOVIE DETAILS-->
+    <string name="votes_number">من %d مستخدم</string>
+    <string name="watch_now">شاهد الآن</string>
+
     <!--    RESPONSE SUCCESS-->
     <string name="login_success">تم تسجيل الدخول بنجاح</string>
 

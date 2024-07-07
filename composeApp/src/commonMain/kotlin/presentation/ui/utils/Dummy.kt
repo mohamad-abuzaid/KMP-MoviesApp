@@ -1,5 +1,6 @@
 package presentation.ui.utils
 
+import presentation.models.ActorDisplay
 import presentation.models.MovieDisplay
 
 /**
@@ -20,7 +21,7 @@ object Dummy {
         releaseDate = "2024-05-08",
         title = "Furiosa: A Mad Max Saga",
         video = false,
-        voteAverage = 6.7,
+        voteAverage = 4.5,
         voteCount = 7715
     )
 
@@ -37,7 +38,7 @@ object Dummy {
         releaseDate = "2023-05-08",
         title = "Godzilla Minus One",
         video = false,
-        voteAverage = 14.15,
+        voteAverage = 2.0,
         voteCount = 6739
     )
 
@@ -54,7 +55,7 @@ object Dummy {
         releaseDate = "2022-05-08",
         title = "The First Omen",
         video = false,
-        voteAverage = 22.23,
+        voteAverage = 3.5,
         voteCount = 9493
     )
 
@@ -71,7 +72,7 @@ object Dummy {
         releaseDate = "2020-05-08",
         title = "Tarot",
         video = false,
-        voteAverage = 30.31,
+        voteAverage = 1.5,
         voteCount = 2462
     )
 
@@ -88,7 +89,7 @@ object Dummy {
         releaseDate = "2021-05-08",
         title = "Civil War",
         video = false,
-        voteAverage = 38.39,
+        voteAverage = 2.8,
         voteCount = 4188
     )
 
@@ -105,11 +106,39 @@ object Dummy {
         releaseDate = "2023-05-08",
         title = "Kingdom of the Planet of the Apes",
         video = false,
-        voteAverage = 46.47,
+        voteAverage = 4.9,
         voteCount = 1777
     )
 
     val movies = listOf(movie1, movie2, movie3, movie4, movie5, movie6)
+
+    /*********************/
+
+    val actor1 = ActorDisplay(
+        name = "Toni Duran",
+        role = "as per",
+        photo = "https://picsum.photos/100",
+    )
+
+    private val actor2 = ActorDisplay(
+        name = "Sophia Meadows",
+        role = "as errem",
+        photo = "https://picsum.photos/100",
+    )
+
+    private val actor3 = ActorDisplay(
+        name = "Gavin Gamble",
+        role = "as maiorum",
+        photo = "https://picsum.photos/100",
+    )
+
+    private val actor4 = ActorDisplay(
+        name = "Albert Cohen",
+        role = "as harum",
+        photo = "https://picsum.photos/100",
+    )
+
+    val actors = listOf(actor1, actor2, actor3, actor4)
 }
 
 

@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,6 +26,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
+import io.ktor.http.encodeURLParameter
 import kmp_movies.composeapp.generated.resources.Res
 import kmp_movies.composeapp.generated.resources.categories_title
 import kmp_movies.composeapp.generated.resources.ic_movies
@@ -54,6 +58,7 @@ class HomeScreen : Screen {
 @Composable
 private fun HomeScreenContent() {
     val searchQuery = remember { mutableStateOf("") }
+    val navigator = LocalNavigator.currentOrThrow
 
     ScreenPage(
         pullRefreshEnabled = true,
@@ -143,8 +148,14 @@ private fun HomeScreenContent() {
                 verticalArrangement = Arrangement.spacedBy(10.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                items(items.size) { index ->
-                    MovieItem(movieItem = items[index])
+                items(items) { movie ->
+                    MovieItem(movieItem = movie) {
+                        navigator.push(
+                            MovieDetailsScreen(
+                                movie.copy(posterPath = movie.posterPath.encodeURLParameter())
+                            )
+                        )
+                    }
                 }
             }
         }
