@@ -123,6 +123,8 @@ This file is tracked as part of the historical tutorial. Use only your own devel
 
 ### Run a target
 
+> These are the target entry points defined by the build. The untouched historical dependency set does not currently complete a full Gradle check; see [Known current build limitation](#known-current-build-limitation).
+
 Android:
 
 ```bash
@@ -146,6 +148,10 @@ iOS: open `iosApp/iosApp.xcodeproj` in Xcode, select a simulator or device, and 
 ## Engineering notes and next exercises
 
 This repository preserves a learning project created in 2024. Some dependencies were alpha, beta, experimental, or snapshot releases at that time. It is an educational reference, not a current production template, and `main` does not yet include an automated test suite or CI quality gate.
+
+### Known current build limitation
+
+A clean `./gradlew check` currently stops during Wasm dependency resolution, before tests can run. The historical `coil-network-ktor:3.0.0-alpha06` dependency requests `ktor-client-core:2.3.8`, which does not provide the Wasm runtime variant required by this build. Resolving that version alignment is part of modernizing the project, not something this tutorial snapshot hides.
 
 Those constraints make useful follow-on exercises:
 
