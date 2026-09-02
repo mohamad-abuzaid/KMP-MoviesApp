@@ -29,3 +29,7 @@ captures
 !*.xcodeproj/project.xcworkspace/
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
+branch_structure.json
+temp_auto_push.bat
+temp_interactive_push.bat
+.gitignore
